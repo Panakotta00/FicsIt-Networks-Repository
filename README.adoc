@@ -8,15 +8,15 @@ It contains Templates, Full-Fledged Programs and Examples provided by the Mod-Au
 
 Anyone with a GitHub Account can publish a Package.
 
-Create Fork of this Git Repository and add a Folder with an Alphanumeric Name (`[a-zA-Z0-9_\-]+`) to the [`Repository`](https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Repository) Folder.
+Create Fork of this Git Repository and add a Folder with an Alphanumeric Name (`[a-zA-Z0-9_\-]+`) to the link:/Repository[`Repository`] Folder.
 
 In this newly created folder create a `README.adoc` or `README.md` containing a description of your package. +
 Add a `EEPROM.lua` file containing your EEPROM Code. +
 Lastly, create a `metadata.toml` file, containing further metadata about your package.
 
-You can look at already submitted packages for examples of package structure or check the package definition (WIP).
+TIP: You can look at already submitted packages for examples of package structure or check the package definition (WIP).
 
-Alternatively you can copy the [Example Package](https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Repository/ExamplePackage), change the folder and fill in the files with your own data.
+NOTE: Alternatively you can copy the link:/Repository/ExamplePackage[Example Package], change the folder and fill in the files with your own data.
 
 After you have comitted your changes to your Fork, you can create a Pull-Request to this Repository on the main branch. +
 Once your PR gets merged, your Package will be available in the FicsIt-Repository.
@@ -24,7 +24,7 @@ Once your PR gets merged, your Package will be available in the FicsIt-Repositor
 If you want to update your software, create a copy of your Package-Folder contents, and put them into a newly created folder inside your Package-Folder with the version "old" version-number prefixed with `v` as folder name. +
 e.g. if you had a package `MyPackage` with the version `1.2.3`, create a Folder called `v1.2.3` and copy your contents in there. +
 After that you can alter your package however you want.
-Ensure you have increased your version number in the metadata file. 
+CAUTION: Ensure you have increased your version number in the metadata file. 
 
 == Work-In-Progress
 
