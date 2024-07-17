@@ -1,0 +1,24 @@
+# Net-Boot
+
+This is simple implementation of a Net-Boot solution.
+
+It simply allows you to have multiple computers in a network, that request and get updates from a different computer that "serves" EEPROM Programs.
+
+The Software Distribution occurs over network messages. Requiring all comptuers to have a Network Card an be connected with each other (this includes WAPs).
+
+You can have multiple Net-Boot servers in the same network, serving different programs.  
+Undefined behaviour may occur if you have multiple Servers providing the same program.
+
+If you start a Server (or restart one), it will broadcast a restart command to all computers running one of the programs the Server is providing. Effectively causing a Software Update and Reboot.
+
+The clients request a program upon start/after restart.  
+They will retry indefinetly after some amount of time without response of a Server.  
+
+The loaded coded will be executed in a protected call, allowing for an automatic computer restart in the case of a error.
+
+The Client will override the `event.pull(...)` function with a wrapper, that filters out Net-Boot messages.  
+The main use for this is the software update functionallity.  
+
+Additionally, the loaded Program can define a global `netBootReset()` function. Which will be called before the restart when the client receives an software update command, allowing the code to do some manual "cleanup" (again protected, causing a restart instead of a system crash).
+
+You can define a matching custom communication port for both server and client.
