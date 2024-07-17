@@ -1,0 +1,36 @@
+= FicsIt-Networks-Repository
+
+This is a repository/collection of Software Packages for use with the FicsIt-Networks mod.
+
+It contains Templates, Full-Fledged Programs and Examples provided by the Mod-Authors and the Mods Community.
+
+== Publish a Package
+
+Anyone with a GitHub Account can publish a Package.
+
+Create Fork of this Git Repository and add a Folder with an Alphanumeric Name (`[a-zA-Z0-9_\-]+`) to the [`Repository`](/Repository) Folder.
+
+In this newly created folder create a `README.adoc` or `README.md` containing a description of your package. +
+Add a `EEPROM.lua` file containing your EEPROM Code. +
+Lastly, create a `metadata.toml` file, containing further metadata about your package.
+
+You can look at already submitted packages for examples of package structure or check the package definition (WIP).
+
+Alternatively you can copy the [Example Package](/Repository/ExamplePackage), change the folder and fill in the files with your own data.
+
+After you have comitted your changes to your Fork, you can create a Pull-Request to this Repository on the main branch. +
+Once your PR gets merged, your Package will be available in the FicsIt-Repository.
+
+If you want to update your software, create a copy of your Package-Folder contents, and put them into a newly created folder inside your Package-Folder with the version "old" version-number prefixed with `v` as folder name. +
+e.g. if you had a package `MyPackage` with the version `1.2.3`, create a Folder called `v1.2.3` and copy your contents in there. +
+After that you can alter your package however you want.
+Ensure you have increased your version number in the metadata file. 
+
+== Work-In-Progress
+
+This Repository is work-in-progress. +
+And Package defintion may change over time.
+
+Already submitted packages will get converted to new defintions using manual or automatic migration procedures if possible.
+
+There will be a Web and In-Game Interface to browser the Repository more user-friendly.
