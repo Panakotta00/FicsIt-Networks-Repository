@@ -8,7 +8,7 @@ It contains Templates, Full-Fledged Programs and Examples provided by the Mod-Au
 
 Anyone with a GitHub Account can publish a Package.
 
-Create Fork of this Git Repository and add a Folder with an Alphanumeric Name (`[a-zA-Z0-9_\-]+`) to the [`Repository`](Repository) Folder.
+Create Fork of this Git Repository and add a Folder with an Alphanumeric Name (`[a-zA-Z0-9_\-]+`) to the [`Repository`](https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Repository) Folder.
 
 In this newly created folder create a `README.adoc` or `README.md` containing a description of your package. +
 Add a `EEPROM.lua` file containing your EEPROM Code. +
@@ -16,7 +16,7 @@ Lastly, create a `metadata.toml` file, containing further metadata about your pa
 
 You can look at already submitted packages for examples of package structure or check the package definition (WIP).
 
-Alternatively you can copy the [Example Package](Repository/ExamplePackage), change the folder and fill in the files with your own data.
+Alternatively you can copy the [Example Package](https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Repository/ExamplePackage), change the folder and fill in the files with your own data.
 
 After you have comitted your changes to your Fork, you can create a Pull-Request to this Repository on the main branch. +
 Once your PR gets merged, your Package will be available in the FicsIt-Repository.
