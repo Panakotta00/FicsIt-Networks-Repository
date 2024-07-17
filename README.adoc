@@ -24,6 +24,7 @@ Once your PR gets merged, your Package will be available in the FicsIt-Repositor
 If you want to update your software, create a copy of your Package-Folder contents, and put them into a newly created folder inside your Package-Folder with the version "old" version-number prefixed with `v` as folder name. +
 e.g. if you had a package `MyPackage` with the version `1.2.3`, create a Folder called `v1.2.3` and copy your contents in there. +
 After that you can alter your package however you want.
+
 CAUTION: Ensure you have increased your version number in the metadata file. 
 
 == Work-In-Progress
