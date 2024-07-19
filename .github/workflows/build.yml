@@ -32,14 +32,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Dependencies
-        run: sudo apt-get install -y musl-dev:armhf
+        run: sudo apt-get install -y musl-dev
       - name: Add Toolchain ARM64-musl
-        run: rustup target add armv7-unknown-linux-musleabihf
+        run: rustup target add aarch64-unknown-linux
       - name: Build for ARM64-musl
         working-directory: ./Website
-        run: |
-          CARGO_TARGET_ARMV7_UNKNOWN_LINUX_MUSLEABIHF_LINKER=arm-linux-gnueabihf-ld \
-          cargo build --verbose --target armv7-unknown-linux-musleabihf --release
+        run: cargo build --verbose --target aarch64-unknown-linux --release
       - uses: pnpm/action-setup@v4
       - name: Run Tailwind
         working-directory: ./Website
@@ -49,7 +47,7 @@ jobs:
         with:
           name: Upload Website
           path: |
-            ./Website/target/aarch64-unknown-linux-musl/release/FicsIt-Networks-Repository-Website
+            ./Website/target/aarch64-unknown-linux/release/FicsIt-Networks-Repository-Website
             ./Website/static/
   deploy:
     needs: build
