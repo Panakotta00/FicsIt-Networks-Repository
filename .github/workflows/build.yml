@@ -34,10 +34,12 @@ jobs:
       - name: Install Dependencies
         run: sudo apt-get install -y binutils-arm-linux-gnueabihf
       - name: Add Toolchain ARM64-musl
-        run: rustup target add aarch64-unknown-linux-musl
+        run: rustup target add armv7-unknown-linux-musleabihf
       - name: Build for ARM64-musl
         working-directory: ./Website
-        run: cargo build --verbose --target aarch64-unknown-linux-musl --release
+        run: |
+          CARGO_TARGET_ARMV7_UNKNOWN_LINUX_MUSLEABIHF_LINKER=arm-linux-gnueabihf-ld \
+          cargo build --verbose --target armv7-unknown-linux-musleabihf --release
       - uses: pnpm/action-setup@v4
       - name: Run Tailwind
         working-directory: ./Website
