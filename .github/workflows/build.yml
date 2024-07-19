@@ -1,0 +1,73 @@
+name: Website
+
+on:
+  push:
+    branches:
+      - master
+      - development
+    paths:
+      - "Website/**"
+  pull_request:
+    branches:
+      - master
+      - development
+    paths:
+      - "Website/**"
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      DEPLOY_HOST:
+        required: true
+      DEPLOY_USERNAME:
+        required: true
+      DEPLOY_KEY:
+        required: true
+      DEPLOY_FOLDER:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add Toolchain ARM64-musl
+        run: rustup target add aarch64-unknown-linux-musl
+      - name: Build for ARM64-musl
+        run: cargo build --verbose --target aarch64-unknown-linux-musl --release
+      - uses: pnpm/action-setup@v4
+      - name: Run Tailwind
+        run: pnpm run tailwind
+      - name: Upload Website
+        uses: actions/upload-artifact@v4
+        with:
+          name: Upload Website
+          path: |
+            target/aarch64-unknown-linux-musl/release/FicsIt-Networks-Repository-Website
+            static/
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Download Website
+        uses: actions/download-artifact@v3
+        with:
+          name: Website
+      - name: Copy Website artifact to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          source: "Website/*"
+          target: ${{ secrets.DEPLOY_FOLDER }}
+      - name: Docker Compose
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            cd $${{ secrets.DEPLOY_FOLDER }}
+            docker compose up --build --force-recreate
