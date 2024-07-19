@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Dependencies
-        run: sudo apt-get install -y musl-dev gcc-aarch64-linux-gnu
+        run: sudo apt-get install -y musl-dev gcc-aarch64-linux-gnu libssl-dev
       - name: Add Toolchain ARM64-musl
         run: rustup target add aarch64-unknown-linux-musl
       - name: Build for ARM64-musl
