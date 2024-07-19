@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Dependencies
-        run: sudo apt-get install -y arm-linux-musleabihf-gcc
+        run: sudo apt-get install -y binutils-arm-linux-gnueabihf
       - name: Add Toolchain ARM64-musl
         run: rustup target add aarch64-unknown-linux-musl
       - name: Build for ARM64-musl
