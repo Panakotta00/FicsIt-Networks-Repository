@@ -1,4 +1,4 @@
-# Net-Boot
+= Net-Boot
 
 This is simple implementation of a Net-Boot solution.
 
@@ -16,9 +16,9 @@ They will retry indefinetly after some amount of time without response of a Serv
 
 The loaded coded will be executed in a protected call, allowing for an automatic computer restart in the case of a error.
 
-The Client will override the `event.pull(...)` function with a wrapper, that filters out Net-Boot messages.  
+WARNING: The Client will override the `event.pull(...)` function with a wrapper, that filters out Net-Boot messages.  
 The main use for this is the software update functionallity.  
 
-Additionally, the loaded Program can define a global `netBootReset()` function. Which will be called before the restart when the client receives an software update command, allowing the code to do some manual "cleanup" (again protected, causing a restart instead of a system crash).
+TIP: Additionally, the loaded Program can define a global `netBootReset()` function. Which will be called before the restart when the client receives an software update command, allowing the code to do some manual "cleanup" (again protected, causing a restart instead of a system crash).
 
 You can define a matching custom communication port for both server and client.
