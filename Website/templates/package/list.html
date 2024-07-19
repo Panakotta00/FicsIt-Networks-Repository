@@ -1,0 +1,18 @@
+{% for package_id in package_ids %}
+<div
+    id="package-{{package_id}}"
+    class="font-flow"
+    hx-get="/package/{{package_id}}"
+    hx-target="this"
+    hx-trigger="load"
+    hx-swap="outerHTML"
+>
+    <h3>Example Package</h3>
+    <p class="flex-1">
+        Some example Description.
+        We even have multiple lines.
+        This text should not be visible
+        by using the Flow-Font.
+    </p>
+</div>
+{% endfor %}

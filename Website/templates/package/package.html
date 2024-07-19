@@ -1,0 +1,25 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+
+{% block title %}FIN-Repo - {{package.name}}{% endblock %}
+
+{% block content %}
+<main class="flex-1 p-6 dark:bg-neutral-800" id="package-{{package.id}}">
+    <h1>{{package.name}}</h1>
+    <div id="description" class="flex-1" hidden onload="console.log('nice');">
+{{package.readme}}
+    </div>
+    <script type="module">
+        import { parse_adoc, parse_md } from "/script/main.js";
+        let element = document.querySelector("#package-{{package.id}} #description");
+
+        {% if readme_asciidoc %}
+            parse_adoc(element);
+            element.classList.add("adoc");
+        {% else %}
+            parse_md(element);
+            element.classList.add("markdown");
+        {% endif %}
+    </script>
+</main>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+
+{% block title %}FicsIt-Networks-Repository{% endblock %}
+
+{% block content %}
+<main class="flex-1 p-6 dark:bg-neutral-800">
+    <div
+            id="package-list"
+            class="flex flex-wrap gap-4"
+            hx-get="/package"
+            hx-ext="json-enc"
+            hx-target="this"
+            hx-trigger="load"
+            hx-swap="innerHTML"
+    >
+        Loading...
+    </div>
+</main>
+{% endblock %}

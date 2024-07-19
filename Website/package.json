@@ -1,0 +1,17 @@
+{
+  "name": "ficsit-networks-repository-website",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "format": "prettier --write --ignore-unknown .",
+    "tailwind": "pnpm dlx tailwindcss -i static/styles/tailwind.css -o static/styles/main.css",
+    "tailwind-watch": "pnpm dlx tailwindcss -i static/styles/tailwind.css -o static/styles/main.css --watch",
+    "server-watch": "RUST_LOG=info cargo watch -x run"
+  },
+  "author": "Panakotta00",
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tailwindcss": "^3.4.1"
+  }
+}
