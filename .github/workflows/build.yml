@@ -66,7 +66,7 @@ jobs:
     name: Deploy
     steps:
       - name: Download Website
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Website
           path: ./Website
