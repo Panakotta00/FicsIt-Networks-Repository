@@ -24,3 +24,4 @@ zip = "2.1.4"
 toml = "0.8.15"
 url = "2.5.2"
 reqwest = "0.12.5"
+openssl = { version = "0.10.64", features = ["vendored"] }
