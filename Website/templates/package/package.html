@@ -9,6 +9,42 @@
     <div id="description" class="flex-1" hidden onload="console.log('nice');">
 {{package.readme}}
     </div>
+    {% if package.eeprom.len() > 0 %}
+    <div id="eeproms" class="w-full mt-4">
+        <h2>EEPROMs</h2>
+        <div class="flex flex-wrap gap-4 justify-stretch w-full p-2">
+            {% for eeprom in package.eeprom %}
+            <div id="eeprom-{{eeprom.name}}" class="bg-secondary-bg text-secondary-fg p-2 px-4 max-w-64">
+                <div class="flex items-center justify-between">
+                    <a class="tooltip" href="https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Packages/{{package.id}}/{{eeprom.name}}" target=”_blank”>
+                        <b>{{eeprom.title}}</b>
+                        <span class="tooltiptext">
+                            {{eeprom.name}}
+                        </span>
+                    </a>
+                    <button class="popup border-solid border-secondary-fg border rounded p-1 mx-2"
+                            _="on click
+                               fetch 'https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/{{package.id}}/{{eeprom.name}}'
+                               put the result into text
+                               js(text)
+                                   navigator.clipboard.writeText(text)
+                               end
+                               add .show to me
+                               wait 1s
+                               remove .show from me
+                            ">
+                        Click to Copy
+                        <span class="tooltiptext">Copied to Clipboard!</span>
+                    </button>
+                </div>
+                <p class="p-2">
+                    {{eeprom.description}}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
     <script type="module">
         import { parse_adoc, parse_md } from "/script/main.js";
         let element = document.querySelector("#package-{{package.id}} #description");

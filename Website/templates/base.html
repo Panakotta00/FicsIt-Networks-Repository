@@ -2,24 +2,34 @@
 <html lang="en">
 <head>
     <link href="/styles/main.css" rel="stylesheet" />
-    <link href="/styles/asciidoc.css" rel="stylesheet" />
     <title>{% block title %}{{ title }}{% endblock %}</title>
 
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/remove-me.js"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 
     {% block head %}{% endblock %}
 </head>
-<body>
+<body class="bg-primary-bg text-primary-fg">
 <div id="content">
-    <div class="flex flex-col h-screen dark:bg-neutral-900">
-        <header class="flex justify-between items-center p-6 border-b h-14 bg-neutral-100/40 dark:bg-neutral-800/40">
-            <a href="/"><h1 class="text-lg font-semibold dark:text-white">FicsIt-Networks-Repository</h1></a>
+    <div class="flex flex-col h-screen">
+        <header class="flex justify-between items-center p-6 bg-accent1 text-white">
+            <a href="/"><h1 class="font-semibold">FicsIt-Networks-Repository</h1></a>
             <form action="/" method="GET" class="w-1/3 min-w-60">
             <input id="search"
-                   class="form-control p-2 w-full"
+                   autofocus
+                   class="form-control p-2 w-full bg-primary-bg text-primary-fg"
                    type="search"
+                   spellcheck="false"
                    name="search" placeholder="Search Repository..."
                    hx-get="/package"
                    hx-trigger="input changed delay:500ms"
