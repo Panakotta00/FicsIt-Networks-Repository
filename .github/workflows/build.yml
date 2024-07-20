@@ -33,14 +33,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Dependencies
         run: sudo apt-get install -y musl-dev gcc-aarch64-linux-gnu libssl-dev pkg-config libudev-dev
-      - name: Add Toolchain ARM64-musl
+      - name: Add Toolchain ARM64
         run: rustup target add aarch64-unknown-linux-gnu
-      - name: Build for ARM64-musl
+      - name: Build for ARM64
         working-directory: ./Website
         run: |
           export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc
           cargo build --verbose --target aarch64-unknown-linux-gnu --release
       - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install PNPM packages
+        working-directory: ./Website
+        run: pnpm install
       - name: Run Tailwind
         working-directory: ./Website
         run: pnpm run tailwind
@@ -49,7 +54,7 @@ jobs:
         with:
           name: Upload Website
           path: |
-            ./Website/target/aarch64-unknown-linux/release/FicsIt-Networks-Repository-Website
+            ./Website/target/aarch64-unknown-linux-gnu/release/FicsIt-Networks-Repository-Website
             ./Website/static/
   deploy:
     needs: build
