@@ -40,7 +40,7 @@ fn unzip_index<R: Read + Seek>(reader: R) -> zip::result::ZipResult<TempDir> {
 
 async fn get_and_unzip_index(url: &str) -> zip::result::ZipResult<TempDir> {
     match read_file_or_url(url).await.unwrap() {
-        URLOrFile::URL(content) => unzip_index(std::io::Cursor::new(content.as_bytes())),
+        URLOrFile::URL(content) => unzip_index(std::io::Cursor::new(content)),
         URLOrFile::File(file) => unzip_index(&file),
     }
 }

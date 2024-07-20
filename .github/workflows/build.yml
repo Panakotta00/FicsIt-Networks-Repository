@@ -53,7 +53,7 @@ jobs:
         working-directory: ./Website
         run: |
           cp target/aarch64-unknown-linux-gnu/release/FicsIt-Networks-Repository-Website .
-          chmod 770 FicsIt-Networks-Repository-Website
+          chmod 770 ./FicsIt-Networks-Repository-Website
       - name: Upload Website
         uses: actions/upload-artifact@v4
         with:
@@ -87,5 +87,6 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            cd $${{ secrets.DEPLOY_FOLDER }}
+            cd ${{ secrets.DEPLOY_FOLDER }}
+            chmod 770 ./Website/FicsIt-Networks-Repository-Website
             podman-compose up --build --force-recreate

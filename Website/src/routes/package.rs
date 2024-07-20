@@ -79,7 +79,7 @@ pub async fn get_package(
     Path((package_id)): Path<(String)>,
 ) -> Result<Response> {
     let mut package: Package = match read_file_or_url(&repository.path(&format!("/Packages/{package_id}/metadata.toml"))).await.ok_or(StatusCode::NOT_FOUND)? {
-        URLOrFile::URL(content) => toml::from_str(&content).ok(),
+        URLOrFile::URL(content) => std::str::from_utf8(&content).ok().map(|s| toml::from_str(s).unwrap()).flatten(),
         URLOrFile::File(file) => std::io::read_to_string(file).ok().map(|s| {
             toml::from_str(&s).unwrap()
         }).flatten(),
@@ -99,7 +99,7 @@ pub async fn get_package(
         readme = read_file_or_url(&repository.path(&format!("/Packages/{package_id}/README.adoc"))).await;
     }
     package.readme = match readme.ok_or(StatusCode::NOT_FOUND)? {
-        URLOrFile::URL(content) => Some(content),
+        URLOrFile::URL(content) => std::str::from_utf8(&content).map(|s| s.to_string()).ok(),
         URLOrFile::File(file) => std::io::read_to_string(file).ok(),
     }.unwrap_or("".to_string());
 

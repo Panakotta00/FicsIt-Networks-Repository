@@ -15,7 +15,7 @@ use url::Url;
 use crate::repository::Repository;
 
 pub async fn app() -> Result<Router, anyhow::Error> {
-    let index_file = std::env::var("FIN_REPO_INDEX").unwrap_or(String::from("../index.zip"));
+    let index_file = std::env::var("FIN_REPO_INDEX").unwrap_or(String::from("https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/index/index.zip"));
     let url = std::env::var("FIN_REPO_RAW").unwrap_or(String::from(".."));
     println!("Repository Index File: '{}'", index_file);
     println!("Repository Raw Base URL: '{}'", url);
