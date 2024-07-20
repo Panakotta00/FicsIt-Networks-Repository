@@ -51,7 +51,9 @@ jobs:
         run: pnpm run tailwind
       - name: Prepare Upload
         working-directory: ./Website
-        run: cp target/aarch64-unknown-linux-gnu/release/FicsIt-Networks-Repository-Website .
+        run: |
+          cp target/aarch64-unknown-linux-gnu/release/FicsIt-Networks-Repository-Website .
+          chmod 770 FicsIt-Networks-Repository-Website
       - name: Upload Website
         uses: actions/upload-artifact@v4
         with:
@@ -86,4 +88,4 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             cd $${{ secrets.DEPLOY_FOLDER }}
-            docker compose up --build --force-recreate
+            podman-compose up --build --force-recreate
