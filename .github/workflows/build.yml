@@ -38,7 +38,7 @@ jobs:
       - name: Build for ARM64-musl
         working-directory: ./Website
         run: |
-          export CARGO_TARGET_ARMV7_UNKNOWN_LINUX_GNUEABIHF_LINKER=/usr/bin/aarch64-linux-gnu-gcc
+          export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc
           cargo build --verbose --target aarch64-unknown-linux-gnu --release
       - uses: pnpm/action-setup@v4
       - name: Run Tailwind
