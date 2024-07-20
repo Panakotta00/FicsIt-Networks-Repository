@@ -49,12 +49,15 @@ jobs:
       - name: Run Tailwind
         working-directory: ./Website
         run: pnpm run tailwind
+      - name: Prepare Upload
+        working-directory: ./Website
+        run: cp target/aarch64-unknown-linux-gnu/release/FicsIt-Networks-Repository-Website .
       - name: Upload Website
         uses: actions/upload-artifact@v4
         with:
-          name: Upload Website
+          name: Website
           path: |
-            ./Website/target/aarch64-unknown-linux-gnu/release/FicsIt-Networks-Repository-Website
+            ./Website/FicsIt-Networks-Repository-Website
             ./Website/static/
   deploy:
     needs: build
@@ -66,13 +69,14 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: Website
+          path: ./Website
       - name: Copy Website artifact to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
-          source: "Website/*"
+          source: "./Website/*"
           target: ${{ secrets.DEPLOY_FOLDER }}
       - name: Docker Compose
         uses: appleboy/ssh-action@v1.0.3
