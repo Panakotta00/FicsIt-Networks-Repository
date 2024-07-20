@@ -1,6 +1,8 @@
 use std::fs::File;
 use std::path::Path;
 use axum::body::Bytes;
+use reqwest::StatusCode;
+use tracing::error;
 use url::Url;
 
 pub enum URLOrFile {
@@ -10,11 +12,14 @@ pub enum URLOrFile {
 
 pub async fn read_file_or_url(url: &str) -> Option<URLOrFile> {
     Some(if let Ok(url) = Url::parse(url) {
-        let response = reqwest::get(url).await.unwrap();
-        let content = response.bytes().await.unwrap();
+        let response = reqwest::get(url).await.map_err(|e| error!("Failed to request '{url}': {e}")).ok()?;
+        if response.status() != StatusCode::OK {
+            return None
+        }
+        let content = response.bytes().await.map_err(|e| error!("Failed to read bytes from response of '{url}': {e}")).ok()?;
         URLOrFile::URL(content)
     } else {
-        let index = File::open(Path::new(url)).unwrap();
+        let index = File::open(Path::new(url)).map_err(|e| error!("Failed to open file '{url}': {e}")).ok()?;
         URLOrFile::File(index)
     })
 }
