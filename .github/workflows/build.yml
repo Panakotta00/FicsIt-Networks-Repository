@@ -34,11 +34,11 @@ jobs:
       - name: Install Dependencies
         run: sudo apt-get install -y musl-dev gcc-aarch64-linux-gnu libssl-dev pkg-config libudev-dev
       - name: Add Toolchain ARM64-musl
-        run: rustup target add aarch64-linux-gnu-gcc
+        run: rustup target add aarch64-unknown-linux-gnu
       - name: Build for ARM64-musl
         working-directory: ./Website
         run: |
-          cargo build --verbose --target aarch64-linux-gnu-gcc --release
+          cargo build --verbose --target aarch64-unknown-linux-gnu --release
       - uses: pnpm/action-setup@v4
       - name: Run Tailwind
         working-directory: ./Website
