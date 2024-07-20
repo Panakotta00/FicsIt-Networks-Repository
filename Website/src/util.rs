@@ -11,8 +11,8 @@ pub enum URLOrFile {
 }
 
 pub async fn read_file_or_url(url: &str) -> Option<URLOrFile> {
-    Some(if let Ok(url) = Url::parse(url) {
-        let response = reqwest::get(url).await.map_err(|e| error!("Failed to request '{url}': {e}")).ok()?;
+    Some(if let Ok(url_str) = Url::parse(url) {
+        let response = reqwest::get(url_str).await.map_err(|e| error!("Failed to request '{url}': {e}")).ok()?;
         if response.status() != StatusCode::OK {
             return None
         }
