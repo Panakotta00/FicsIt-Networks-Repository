@@ -1,13 +1,13 @@
 {% for package_id in package_ids %}
 <div
     id="package-{{package_id}}"
-    class="font-flow"
+    class="font-flow w-64 grow"
     hx-get="/package/{{package_id}}"
     hx-target="this"
     hx-trigger="load"
     hx-swap="outerHTML"
 >
-    <h3>Example Package</h3>
+    <h2 class="font-semibold text-lg">Example Package</h2>
     <p class="flex-1">
         Some example Description.
         We even have multiple lines.

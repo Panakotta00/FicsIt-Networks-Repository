@@ -3,6 +3,10 @@
 
 {% block title %}FIN-Repo - {{package.name}}{% endblock %}
 
+{% block head %}
+<meta name="description" content="{{package.short_description}}">
+{% endblock %}
+
 {% block content %}
 <main class="flex-1 p-6 dark:bg-neutral-800" id="package-{{package.id}}">
     <h1>{{package.name}}</h1>
@@ -14,7 +18,7 @@
         <h2>EEPROMs</h2>
         <div class="flex flex-wrap gap-4 justify-stretch w-full p-2">
             {% for eeprom in package.eeprom %}
-            <div id="eeprom-{{eeprom.name}}" class="bg-secondary-bg text-secondary-fg p-2 px-4 max-w-64">
+            <div id="eeprom-{{eeprom.name}}" class="bg-secondary-bg text-secondary-fg p-2 px-4 w-64 grow">
                 <div class="flex items-center justify-between">
                     <a class="tooltip" href="https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Packages/{{package.id}}/{{eeprom.name}}" target=”_blank”>
                         <b>{{eeprom.title}}</b>
