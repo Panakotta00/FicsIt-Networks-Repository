@@ -76,6 +76,8 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     name: Push Index
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
