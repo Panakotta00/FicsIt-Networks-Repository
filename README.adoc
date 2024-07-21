@@ -1,6 +1,6 @@
 = FicsIt-Networks-Repository
 
-This is a repository/collection of Software Packages for use with the FicsIt-Networks mod.
+This is a repository/collection of Software Packages for use with the link:https://github.com/Panakotta00/FicsIt-Networks[FicsIt-Networks] Satisfactory mod.
 
 It contains Templates, Full-Fledged Programs and Examples provided by the Mod-Authors and the Mods Community.
 
