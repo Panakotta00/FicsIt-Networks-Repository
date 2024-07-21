@@ -69,6 +69,7 @@ jobs:
   push-index:
     needs: index
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
     name: Push Index
     steps:
       - uses: actions/checkout@v4
@@ -92,6 +93,7 @@ jobs:
           git push
   deploy:
     needs: push-index
+    runs-on: ubuntu-latest
     name: Deploy
     steps:
       - name: Docker Compose
