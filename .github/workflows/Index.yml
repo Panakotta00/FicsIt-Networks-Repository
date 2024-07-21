@@ -72,7 +72,7 @@ jobs:
     name: Push Index
     steps:
       - uses: actions/checkout@v4
-        whith:
+        with:
           ref: index
       - name: Download Index
         uses: actions/download-artifact@v4
