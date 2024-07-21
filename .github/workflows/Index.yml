@@ -68,7 +68,7 @@ jobs:
             ./index.zip
   push-index:
     needs: index
-    if: if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     name: Push Index
     steps:
       - uses: actions/checkout@v4
