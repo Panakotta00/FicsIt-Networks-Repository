@@ -1,4 +1,4 @@
-name: Website
+name: Build & Deploy Website
 
 on:
   push:
@@ -63,7 +63,7 @@ jobs:
             ./Website/static/
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     name: Deploy
     steps:

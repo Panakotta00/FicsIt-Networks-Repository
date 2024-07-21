@@ -1,0 +1,105 @@
+name: Build, Index, Push & Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - development
+    paths:
+      - "Tools/Indexer/**"
+  pull_request:
+    branches:
+      - main
+      - development
+    paths:
+      - "Tools/Indexer/**"
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      DEPLOY_HOST:
+        required: true
+      DEPLOY_USERNAME:
+        required: true
+      DEPLOY_KEY:
+        required: true
+      DEPLOY_FOLDER:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: sudo apt-get install -y libssl-dev pkg-config
+      - name: Build
+        working-directory: ./Tools/Indexer
+        run: |
+          cargo build --bin Index --verbose --release
+      - name: Prepare Upload
+        working-directory: ./Tools/Indexer
+        run: |
+          cp target/release/index .
+          chmod 770 ./index
+      - name: Upload Indexer
+        uses: actions/upload-artifact@v4
+        with:
+          name: Indexer
+          path: |
+            ./Tools/Indexer/index
+  index:
+    needs: build
+    runs-on: ubuntu-latest
+    name: Index
+    steps:
+      - name: Download Indexer
+        uses: actions/download-artifact@v4
+        with:
+          name: Indexer
+          path: ./Indexer
+      - name: Run Indexer
+        run: ./Indexer/index
+      - name: Upload Index
+        uses: actions/upload-artifact@v4
+        with:
+          name: Index
+          path: |
+            ./index.zip
+  push-index:
+    needs: index
+    if: if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    name: Push Index
+    steps:
+      - uses: actions/checkout@v4
+        whith:
+          ref: index
+      - name: Download Index
+        uses: actions/download-artifact@v4
+        with:
+          name: Index
+          path: .
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Commit
+        run: |
+          git add index.zip
+          git commit -m "Update Index"
+      - name: Push
+        run: |
+          git push
+  deploy:
+    needs: push-index
+    name: Deploy
+    steps:
+      - name: Docker Compose
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_FOLDER }}
+            podman-compose up -d --force-recreate
