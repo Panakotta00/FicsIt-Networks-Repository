@@ -33,17 +33,27 @@ jobs:
     name: Build
     steps:
       - uses: actions/checkout@v4
+      - name: Cache Indexer
+        id: cache-indexer
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-indexer
+        with:
+          path: ./Tools/Indexer/index
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./Tools/Indexer/**') }}
       - name: Install Dependencies
+        if: steps.cache-indexer.outputs.cache-hit != 'true'
         run: sudo apt-get install -y libssl-dev pkg-config
       - name: Build
+        if: steps.cache-indexer.outputs.cache-hit != 'true'
         working-directory: ./Tools/Indexer
         run: |
           cargo build --bin index --verbose --release
       - name: Prepare Upload
+        if: steps.cache-indexer.outputs.cache-hit != 'true'
         working-directory: ./Tools/Indexer
         run: |
           cp target/release/index .
-          chmod 770 ./index
       - name: Upload Indexer
         uses: actions/upload-artifact@v4
         with:
