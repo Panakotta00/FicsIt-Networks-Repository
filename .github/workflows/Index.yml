@@ -7,12 +7,14 @@ on:
       - development
     paths:
       - "Tools/Indexer/**"
+      - "Packages/**"
   pull_request:
     branches:
       - main
       - development
     paths:
       - "Tools/Indexer/**"
+      - "Packages/**"
   workflow_dispatch:
   workflow_call:
     secrets:
@@ -53,6 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Index
     steps:
+      - uses: actions/checkout@v4
       - name: Download Indexer
         uses: actions/download-artifact@v4
         with:
