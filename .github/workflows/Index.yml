@@ -36,7 +36,7 @@ jobs:
       - name: Build
         working-directory: ./Tools/Indexer
         run: |
-          cargo build --bin Index --verbose --release
+          cargo build --bin index --verbose --release
       - name: Prepare Upload
         working-directory: ./Tools/Indexer
         run: |
