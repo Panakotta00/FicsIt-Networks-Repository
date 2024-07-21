@@ -58,6 +58,8 @@ jobs:
         with:
           name: Indexer
           path: ./Indexer
+      - name: Prepare Indexer
+        run: chmod 770 ./Indexer/index
       - name: Run Indexer
         run: ./Indexer/index
       - name: Upload Index
