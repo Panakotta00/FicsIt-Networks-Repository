@@ -2,11 +2,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Package {
-    #[serde(default = "String::new")]
-    pub id: String,
+    #[serde(skip_deserialize)]
+    pub id: Option<String>,
     pub name: String,
     pub short_description: String,
-    #[serde(default = "String::new")]
     pub readme: String,
     #[serde(alias = "EEPROM")]
     pub eeprom: Vec<EEPROMMetadata>,

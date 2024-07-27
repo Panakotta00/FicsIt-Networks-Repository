@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "Indexer", "Repository",
+    "Website",
+]

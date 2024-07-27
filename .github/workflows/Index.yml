@@ -6,14 +6,14 @@ on:
       - main
       - development
     paths:
-      - "Tools/Indexer/**"
+      - "Source/Indexer/**"
       - "Packages/**"
   pull_request:
     branches:
       - main
       - development
     paths:
-      - "Tools/Indexer/**"
+      - "Source/Indexer/**"
       - "Packages/**"
   workflow_dispatch:
   workflow_call:
@@ -39,19 +39,19 @@ jobs:
         env:
           cache-name: cache-indexer
         with:
-          path: ./Tools/Indexer/index
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./Tools/Indexer/**') }}
+          path: ./Source/Indexer/index
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./Source/Indexer/**') }}
       - name: Install Dependencies
         if: steps.cache-indexer.outputs.cache-hit != 'true'
         run: sudo apt-get install -y libssl-dev pkg-config
       - name: Build
         if: steps.cache-indexer.outputs.cache-hit != 'true'
-        working-directory: ./Tools/Indexer
+        working-directory: ./Source/Indexer
         run: |
           cargo build --bin index --verbose --release
       - name: Prepare Upload
         if: steps.cache-indexer.outputs.cache-hit != 'true'
-        working-directory: ./Tools/Indexer
+        working-directory: ./Source/Indexer
         run: |
           cp target/release/index .
       - name: Upload Indexer
@@ -59,7 +59,7 @@ jobs:
         with:
           name: Indexer
           path: |
-            ./Tools/Indexer/index
+            ./Source/Indexer/index
   index:
     needs: build
     runs-on: ubuntu-latest

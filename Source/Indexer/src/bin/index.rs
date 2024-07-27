@@ -16,6 +16,7 @@ struct PackageMetadata {
     name: String,
     version: String,
     short_description: String,
+    tags: Vec<String>,
     #[serde(alias="EEPROM")]
     eeprom: Vec<EEPROMMetadata>,
 }
@@ -35,6 +36,7 @@ fn build_schema() -> Schema {
     builder.add_text_field("version", STRING);
     builder.add_text_field("short_description", TEXT);
     builder.add_text_field("readme", TEXT);
+    builder.add_text_field("tags", TEXT);
     builder.add_text_field("eeprom_name", STRING);
     builder.add_text_field("eeprom_title", TEXT);
     builder.add_text_field("eeprom_description", TEXT);
@@ -48,6 +50,7 @@ fn do_index(input_dir: &Path, index_dir: &Path, schema: Schema) -> tantivy::Resu
     let version = schema.get_field("version").unwrap();
     let short_description = schema.get_field("short_description").unwrap();
     let readme = schema.get_field("readme").unwrap();
+    let tags = schema.get_field("tags").unwrap();
     let eeprom_name = schema.get_field("eeprom_name").unwrap();
     let eeprom_title = schema.get_field("eeprom_title").unwrap();
     let eeprom_description = schema.get_field("eeprom_description").unwrap();
@@ -80,6 +83,9 @@ fn do_index(input_dir: &Path, index_dir: &Path, schema: Schema) -> tantivy::Resu
             version => metadata.version,
             short_description => metadata.short_description,
         );
+        for tag in metadata.tags {
+            document.add_text(tags, tag);
+        }
 
         for eeprom in metadata.eeprom {
             document.add_text(eeprom_name, eeprom.name);
