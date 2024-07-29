@@ -2,12 +2,14 @@ use std::{env, io};
 use std::fs::File;
 use std::path::{Path, PathBuf};
 use getopts::Options;
-use tantivy::collector::TopDocs;
+use tantivy::collector::{BytesFilterCollector, TopDocs};
 use tantivy::query::{FuzzyTermQuery, QueryParser};
 use tantivy::schema::*;
-use tantivy::{doc, Index, IndexWriter, ReloadPolicy};
+use tantivy::{doc, Index, IndexWriter, ReloadPolicy, version};
 use tempfile::TempDir;
 use zip::ZipArchive;
+use ficsit_networks_repository::index;
+use ficsit_networks_repository::index::load_schema;
 
 fn unzip_index(index_file: &Path) -> zip::result::ZipResult<TempDir> {
 	let index = File::open(index_file)?;
@@ -40,14 +42,7 @@ fn load_index(index_dir: &Path) -> tantivy::Result<Index> {
 fn do_query(index: &Index, query: &str) -> tantivy::Result<()> {
 	let schema = index.schema();
 
-	let id = schema.get_field("id").unwrap();
-	let name = schema.get_field("name").unwrap();
-	let version = schema.get_field("version").unwrap();
-	let short_description = schema.get_field("short_description").unwrap();
-	let readme = schema.get_field("readme").unwrap();
-	let eeprom_name = schema.get_field("eeprom_name").unwrap();
-	let eeprom_title = schema.get_field("eeprom_title").unwrap();
-	let eeprom_description = schema.get_field("eeprom_description").unwrap();
+	let package_schema = load_schema(&schema)?;
 
 	let reader = index
 		.reader_builder()
@@ -56,11 +51,33 @@ fn do_query(index: &Index, query: &str) -> tantivy::Result<()> {
 
 	let searcher = reader.searcher();
 
-	let query_parser = QueryParser::for_index(&index, vec![id, name, version, short_description, readme, eeprom_name, eeprom_title, eeprom_description]);
+	let query_parser = QueryParser::for_index(&index, vec![
+		package_schema.id,
+		package_schema.name,
+		package_schema.short_description,
+		package_schema.readme,
+		package_schema.tags,
+		package_schema.authors,
+		package_schema.versions
+	]);
 
 	let query = query_parser.parse_query(query)?;
 
-	let top_docs = searcher.search(&query, &TopDocs::with_limit(10))?;
+	let version_filter = BytesFilterCollector::new("version_data".to_string(), |bytes: &[u8]| {
+		if let Ok(version_data) = bitcode::decode::<index::VersionData>(bytes).map_err(|e| println!("Error at decoding Version Data: {e}")) {
+			if let Some(fin_version) = version_data.fin_version {
+				let fin_version = semver::VersionReq::parse(&fin_version).unwrap();
+				fin_version.matches(&semver::Version::new(0,3,19))
+			} else {
+				false
+			}
+		} else {
+			false
+		}
+	}, TopDocs::with_limit(10));
+
+	let top_docs = searcher.search(&query, &version_filter)?;
+	//let top_docs = searcher.search(&query, &TopDocs::with_limit(10))?;
 
 	for (_score, doc_address) in top_docs {
 		let retrieved_doc: TantivyDocument = searcher.doc(doc_address)?;

@@ -8,52 +8,94 @@
 {% endblock %}
 
 {% block content %}
-<main class="flex-1 p-6 dark:bg-neutral-800" id="package-{{package.id}}">
-    <h1>{{package.name}}</h1>
-    <div id="description" class="flex-1" hidden onload="console.log('nice');">
-{{package.readme}}
-    </div>
-    {% if package.eeprom.len() > 0 %}
-    <div id="eeproms" class="w-full mt-4">
-        <h2>EEPROMs</h2>
-        <div class="flex flex-wrap gap-4 justify-stretch w-full p-2">
-            {% for eeprom in package.eeprom %}
-            <div id="eeprom-{{eeprom.name}}" class="bg-secondary-bg text-secondary-fg p-2 px-4 w-64 grow">
-                <div class="flex items-center justify-between">
-                    <a class="tooltip" href="https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Packages/{{package.id}}/{{eeprom.name}}" target=”_blank”>
-                        <b>{{eeprom.title}}</b>
-                        <span class="tooltiptext">
-                            {{eeprom.name}}
-                        </span>
-                    </a>
-                    <button class="popup border-solid border-secondary-fg border rounded p-1 mx-2"
-                            _="on click
-                               fetch 'https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/{{package.id}}/{{eeprom.name}}'
-                               put the result into text
-                               js(text)
-                                   navigator.clipboard.writeText(text)
-                               end
-                               add .show to me
-                               wait 1s
-                               remove .show from me
-                            ">
-                        Click to Copy
-                        <span class="tooltiptext">Copied to Clipboard!</span>
-                    </button>
-                </div>
-                <p class="p-2">
-                    {{eeprom.description}}
-                </p>
+<main class="dark:bg-neutral-800 flex h-full" id="package-{{package.id}}">
+    <div id="content" class="grow w-full p-6">
+        <div id="title">
+            <div class="flex items-baseline gap-4">
+                <h1>{{package.name}}</h1>
+                {% if let Some(version) = version %}<p>v{{version.version.to_string()}}</p>{% endif %}
             </div>
-            {% endfor %}
+            <div class="flex items-center gap-4">
+                {% for tag in package.tags %}
+                <a href="/?search=%2Btags%3A{{tag}}" class="rounded-full px-2 bg-secondary-bg text-secondary-fg"><span class="text-accent1">#</span>{{tag}}</a>
+                {% endfor %}
+            </div>
         </div>
+        <div id="description" class="flex-1 p-4" hidden>
+{{package.readme}}
+        </div>
+        {% if let Some(v) = version %}
+        {% if v.eeprom.len() > 0 %}
+        <div id="eeproms" class="w-full mt-4">
+            <h2>EEPROMs</h2>
+            <div class="flex flex-wrap gap-4 justify-stretch w-full p-2">
+                {% for eeprom in v.eeprom %}
+                <div id="eeprom-{{eeprom.name}}" class="bg-secondary-bg text-secondary-fg p-2 px-4 w-64 grow">
+                    <div class="flex items-center justify-between">
+                        <a class="tooltip" href="https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Packages/{{package.id}}/{{eeprom.name}}" target=”_blank”>
+                            <b>{{eeprom.title}}</b>
+                            <span class="tooltiptext">
+                                {{eeprom.name}}
+                            </span>
+                        </a>
+                        <button class="popup border-solid border-secondary-fg border rounded p-1 mx-2"
+                                _="on click
+                                   fetch 'https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/{{package.id}}/{{eeprom.name}}'
+                                   put the result into text
+                                   js(text)
+                                       navigator.clipboard.writeText(text)
+                                   end
+                                   add .show to me
+                                   wait 1s
+                                   remove .show from me
+                                ">
+                            Click to Copy
+                            <span class="tooltiptext">Copied to Clipboard!</span>
+                        </button>
+                    </div>
+                    <p class="p-2">
+                        {{eeprom.description}}
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
     </div>
-    {% endif %}
+    <div id="sidebar" class="bg-secondary-bg text-secondary-fg p-4 h-full">
+        {% if !package.authors.is_empty() %}
+        <div id="authors">
+            <h3>Authors</h3>
+            <div class="pl-4">
+                {% for author in package.authors %}
+                <a href="/?search=%2Bauthors%3A{{author}}">{{author}}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% if !package.versions.is_empty() %}
+        <div id="versions">
+            <h3>Versions</h3>
+            <div class="pl-4 flex flex-col">
+                {% for v in package.versions %}
+                <a href="?version={{urlencoding::encode(v.version.to_string().as_str())}}">
+                {% if version.is_some() && version.unwrap().version == v.version %}
+                <b>{{v.version}}</b>
+                {% else %}
+                {{v.version}}
+                {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
     <script type="module">
         import { parse_adoc, parse_md } from "/script/main.js";
         let element = document.querySelector("#package-{{package.id}} #description");
 
-        {% if readme_asciidoc %}
+        {% if let Readme::ASCIIDOC(_) = package.readme %}
             parse_adoc(element);
             element.classList.add("adoc");
         {% else %}

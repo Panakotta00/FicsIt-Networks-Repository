@@ -1,3 +1,5 @@
+#![feature(async_closure)]
+
 mod repository;
 mod templates;
 mod routes;
@@ -15,8 +17,8 @@ use url::Url;
 use crate::repository::Repository;
 
 pub async fn app() -> Result<Router, anyhow::Error> {
-    let index_file = std::env::var("FIN_REPO_INDEX").unwrap_or(String::from("https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/index/index.zip"));
-    let url = std::env::var("FIN_REPO_RAW").unwrap_or(String::from(".."));
+    let index_file = std::env::var("FIN_REPO_INDEX").unwrap_or(String::from("./../../index.zip"));
+    let url = std::env::var("FIN_REPO_RAW").unwrap_or(String::from("../.."));
     println!("Repository Index File: '{}'", index_file);
     println!("Repository Raw Base URL: '{}'", url);
     let repository = Repository::from_url(&index_file, url).await;

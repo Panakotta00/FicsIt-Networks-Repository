@@ -1,5 +1,5 @@
 [package]
-name = "FicsIt-Networks-Repository-Indexer"
+name = "ficsit-networks-repository-tools"
 version = "0.1.0"
 edition = "2021"
 
@@ -10,3 +10,6 @@ getopts = "0.2.21"
 zip = "2.1.4"
 serde = { version = "1.0.204", features = ["derive"] }
 toml = "0.8.15"
+ficsit-networks-repository = { path = "../Repository" }
+semver = "1.0.23"
+bitcode = { workspace = true }

@@ -5,7 +5,6 @@ use axum::response::{Result, IntoResponse, Response};
 use serde::Deserialize;
 use tantivy::collector::TopDocs;
 use tantivy::schema::Value;
-use crate::repository::model::Package;
 use crate::repository::Repository;
 use crate::templates::package::{GetPackageCardResponse, GetPackageResponse, ListPackageResponse};
 use crate::util::{read_file_or_url, URLOrFile};
@@ -29,20 +28,11 @@ pub async fn get_package_list(
     headers: HeaderMap,
 ) -> Result<ListPackageResponse> {
     let package_ids = || -> Option<_> {
-        let schema = repository.index.schema();
-
-        let id = schema.get_field("id").unwrap();
-        let name = schema.get_field("name").unwrap();
-        let version = schema.get_field("version").unwrap();
-        let short_description = schema.get_field("short_description").unwrap();
-        let readme = schema.get_field("readme").unwrap();
-        let eeprom_name = schema.get_field("eeprom_name").unwrap();
-        let eeprom_title = schema.get_field("eeprom_title").unwrap();
-        let eeprom_description = schema.get_field("eeprom_description").unwrap();
-
         let searcher = repository.reader.searcher();
+        let schema = repository.package_schema;
 
-        let query_parser = tantivy::query::QueryParser::for_index(&repository.index, vec![id, name, version, short_description, readme, eeprom_name, eeprom_title, eeprom_description]);
+        let query_parser = tantivy::query::QueryParser::for_index(&repository.index, vec![
+            schema.id, schema.name, schema.short_description, schema.readme, schema.tags, schema.versions, schema.authors]);
 
         let url = headers.get("HX-Current-URL").map(|s| s.to_str().ok()).flatten().map(|s| url::Url::parse(s).ok()).flatten();
 
@@ -64,7 +54,7 @@ pub async fn get_package_list(
 
         Some(top_docs.into_iter().map(|(_score, doc_address)| {
             let doc: tantivy::TantivyDocument = searcher.doc(doc_address).ok()?;
-            doc.get_first(id).map(|v| v.as_str()).flatten().map(|v| v.to_string())
+            doc.get_first(schema.id).map(|v| v.as_str()).flatten().map(|v| v.to_string())
         }).flatten().collect())
     }().ok_or(StatusCode::INTERNAL_SERVER_ERROR)?;
 
@@ -73,18 +63,18 @@ pub async fn get_package_list(
     })
 }
 
+#[derive(Deserialize)]
+pub struct PackageQuery {
+    version: Option<String>,
+}
+
 pub async fn get_package(
     Extension(htmx): Extension<bool>,
     State(repository): State<Repository>,
     Path((package_id)): Path<(String)>,
+    Query(query): Query<PackageQuery>,
 ) -> Result<Response> {
-    let mut package: Package = match read_file_or_url(&repository.path(&format!("/Packages/{package_id}/metadata.toml"))).await.ok_or(StatusCode::NOT_FOUND)? {
-        URLOrFile::URL(content) => std::str::from_utf8(&content).ok().map(|s| toml::from_str(s).unwrap()).flatten(),
-        URLOrFile::File(file) => std::io::read_to_string(file).ok().map(|s| {
-            toml::from_str(&s).unwrap()
-        }).flatten(),
-    }.ok_or(StatusCode::INTERNAL_SERVER_ERROR)?;
-    package.id = package_id.clone();
+    let package = repository.get_package_by_id(&package_id).await?;
 
     if htmx {
         return Ok(GetPackageCardResponse {
@@ -92,19 +82,13 @@ pub async fn get_package(
         }.into_response());
     }
 
-    let mut readme = read_file_or_url(&repository.path(&format!("/Packages/{package_id}/README.md"))).await;
-    let mut readme_asciidoc = false;
-    if readme.is_none() {
-        readme_asciidoc = true;
-        readme = read_file_or_url(&repository.path(&format!("/Packages/{package_id}/README.adoc"))).await;
-    }
-    package.readme = match readme.ok_or(StatusCode::NOT_FOUND)? {
-        URLOrFile::URL(content) => std::str::from_utf8(&content).map(|s| s.to_string()).ok(),
-        URLOrFile::File(file) => std::io::read_to_string(file).ok(),
-    }.unwrap_or("".to_string());
+    let version = query.version.map(|v| {
+        let version = semver::Version::parse(&v).ok()?;
+        package.versions.iter().find(|v| v.version == version)
+    }).flatten().or(package.versions.first());
 
     Ok(GetPackageResponse {
-        package,
-        readme_asciidoc,
+        package: &package,
+        version
     }.into_response())
 }

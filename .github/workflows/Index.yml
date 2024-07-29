@@ -33,48 +33,48 @@ jobs:
     name: Build
     steps:
       - uses: actions/checkout@v4
-      - name: Cache Indexer
-        id: cache-indexer
+      - name: Cache Tools
+        id: cache-tools
         uses: actions/cache@v3
         env:
-          cache-name: cache-indexer
+          cache-name: cache-tools
         with:
-          path: ./Source/Indexer/index
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./Source/Indexer/**') }}
+          path: ./Source/Tools/index
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./Source/Tools/**') }}
       - name: Install Dependencies
-        if: steps.cache-indexer.outputs.cache-hit != 'true'
+        if: steps.cache-tools.outputs.cache-hit != 'true'
         run: sudo apt-get install -y libssl-dev pkg-config
       - name: Build
-        if: steps.cache-indexer.outputs.cache-hit != 'true'
-        working-directory: ./Source/Indexer
+        if: steps.cache-tools.outputs.cache-hit != 'true'
+        working-directory: ./Source/Tools
         run: |
-          cargo build --bin index --verbose --release
+          cargo build --package FicsIt-Networks-Repository-Tools --bin index --verbose --release
       - name: Prepare Upload
-        if: steps.cache-indexer.outputs.cache-hit != 'true'
-        working-directory: ./Source/Indexer
+        if: steps.cache-tools.outputs.cache-hit != 'true'
+        working-directory: ./Source
         run: |
-          cp target/release/index .
-      - name: Upload Indexer
+          cp target/release/index ./Tools
+      - name: Upload Tools
         uses: actions/upload-artifact@v4
         with:
-          name: Indexer
+          name: Tools
           path: |
-            ./Source/Indexer/index
+            ./Source/Tools/index
   index:
     needs: build
     runs-on: ubuntu-latest
     name: Index
     steps:
       - uses: actions/checkout@v4
-      - name: Download Indexer
+      - name: Download Tools
         uses: actions/download-artifact@v4
         with:
-          name: Indexer
-          path: ./Indexer
-      - name: Prepare Indexer
-        run: chmod 770 ./Indexer/index
-      - name: Run Indexer
-        run: ./Indexer/index
+          name: Tools
+          path: ./Tools
+      - name: Prepare Tools
+        run: chmod 770 ./Tools -R
+      - name: Run Index
+        run: ./Tools/index
       - name: Upload Index
         uses: actions/upload-artifact@v4
         with:

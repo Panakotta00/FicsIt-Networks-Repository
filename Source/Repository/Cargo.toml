@@ -1,7 +1,10 @@
 [package]
-name = "FicsIt-Networks-Repository"
+name = "ficsit-networks-repository"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 serde = { version = "1.0.204", features = ["derive"] }
+semver = "1.0.23"
+bitcode = { workspace = true }
+tantivy = "0.22.0"

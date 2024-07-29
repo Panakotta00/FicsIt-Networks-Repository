@@ -1,0 +1,11 @@
+fin_version = ">= 0.3.19"
+
+[[EEPROM]]
+name = "Server-NoFS.lua"
+title = "Server"
+description = "The network server, serving multiple EEPROM Programs to Net-Boot-Clients in the Network. This server does not use the FileSystem for program discovery."
+
+[[EEPROM]]
+name = "Client.lua"
+title = "Client"
+description = "The network client that requests and loads a EEPROM Program served by a Net-Boot-Server in the Network."

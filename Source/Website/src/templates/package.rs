@@ -1,5 +1,5 @@
 use askama::Template;
-use crate::repository::model::Package;
+use ficsit_networks_repository::model::*;
 
 #[derive(Template)]
 #[template(path = "package/list.html")]
@@ -15,7 +15,7 @@ pub struct GetPackageCardResponse {
 
 #[derive(Template)]
 #[template(path = "package/package.html")]
-pub struct GetPackageResponse {
-    pub package: Package,
-    pub readme_asciidoc: bool,
+pub struct GetPackageResponse<'a, 'b: 'a> {
+    pub package: &'a Package,
+    pub version: Option<&'b Version>,
 }

@@ -23,3 +23,10 @@ pub async fn read_file_or_url(url: &str) -> Option<URLOrFile> {
         URLOrFile::File(index)
     })
 }
+
+pub async fn read_file_or_url_as_string(url: &str) -> Option<String> {
+    match read_file_or_url(url).await? {
+        URLOrFile::URL(content) => std::str::from_utf8(&content).ok().map(|s| s.to_string()),
+        URLOrFile::File(file) => std::io::read_to_string(file).ok(),
+    }
+}
