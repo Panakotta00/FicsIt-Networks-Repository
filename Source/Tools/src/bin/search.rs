@@ -1,15 +1,15 @@
-use std::{env, io};
+use ficsit_networks_repository::index;
+use ficsit_networks_repository::index::load_schema;
+use getopts::Options;
 use std::fs::File;
 use std::path::{Path, PathBuf};
-use getopts::Options;
+use std::{env, io};
 use tantivy::collector::{BytesFilterCollector, TopDocs};
 use tantivy::query::{FuzzyTermQuery, QueryParser};
 use tantivy::schema::*;
-use tantivy::{doc, Index, IndexWriter, ReloadPolicy, version};
+use tantivy::{doc, version, Index, IndexWriter, ReloadPolicy};
 use tempfile::TempDir;
 use zip::ZipArchive;
-use ficsit_networks_repository::index;
-use ficsit_networks_repository::index::load_schema;
 
 fn unzip_index(index_file: &Path) -> zip::result::ZipResult<TempDir> {
 	let index = File::open(index_file)?;
@@ -51,30 +51,39 @@ fn do_query(index: &Index, query: &str) -> tantivy::Result<()> {
 
 	let searcher = reader.searcher();
 
-	let query_parser = QueryParser::for_index(&index, vec![
-		package_schema.id,
-		package_schema.name,
-		package_schema.short_description,
-		package_schema.readme,
-		package_schema.tags,
-		package_schema.authors,
-		package_schema.versions
-	]);
+	let query_parser = QueryParser::for_index(
+		&index,
+		vec![
+			package_schema.id,
+			package_schema.name,
+			package_schema.short_description,
+			package_schema.readme,
+			package_schema.tags,
+			package_schema.authors,
+			package_schema.versions,
+		],
+	);
 
 	let query = query_parser.parse_query(query)?;
 
-	let version_filter = BytesFilterCollector::new("version_data".to_string(), |bytes: &[u8]| {
-		if let Ok(version_data) = bitcode::decode::<index::VersionData>(bytes).map_err(|e| println!("Error at decoding Version Data: {e}")) {
-			if let Some(fin_version) = version_data.fin_version {
-				let fin_version = semver::VersionReq::parse(&fin_version).unwrap();
-				fin_version.matches(&semver::Version::new(0,3,19))
+	let version_filter = BytesFilterCollector::new(
+		"version_data".to_string(),
+		|bytes: &[u8]| {
+			if let Ok(version_data) = bitcode::decode::<index::VersionData>(bytes)
+				.map_err(|e| println!("Error at decoding Version Data: {e}"))
+			{
+				if let Some(fin_version) = version_data.fin_version {
+					let fin_version = semver::VersionReq::parse(&fin_version).unwrap();
+					fin_version.matches(&semver::Version::new(0, 3, 19))
+				} else {
+					false
+				}
 			} else {
 				false
 			}
-		} else {
-			false
-		}
-	}, TopDocs::with_limit(10));
+		},
+		TopDocs::with_limit(10),
+	);
 
 	let top_docs = searcher.search(&query, &version_filter)?;
 	//let top_docs = searcher.search(&query, &TopDocs::with_limit(10))?;

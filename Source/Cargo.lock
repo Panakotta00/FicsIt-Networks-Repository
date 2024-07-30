@@ -683,6 +683,7 @@ dependencies = [
  "ficsit-networks-repository",
  "futures-util",
  "getopts",
+ "itertools",
  "moka",
  "openssl",
  "reqwest",

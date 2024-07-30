@@ -1,18 +1,21 @@
-{% for package_id in package_ids %}
-<div
-    id="package-{{package_id}}"
-    class="font-flow w-64 grow"
-    hx-get="/package/{{package_id}}"
-    hx-target="this"
-    hx-trigger="load"
-    hx-swap="outerHTML"
+{% for (position,package) in packages.iter().with_position() %}
+{% let is_last_package = position == itertools::Position::Last || position == itertools::Position::Only %}
+<a id="package-{{package.id}}"
+   class="p-4 bg-secondary-bg text-secondary-fg w-64 grow"
+   {% if let Some(version) = package.version %}
+   href="/package/{{package.id}}?version={{version.to_string()}}"
+   {% else %}
+   href="/package/{{package.id}}"
+   {% endif %}
+   {% if is_last_package %}
+   hx-get="/?page={{next_page}}"
+   hx-trigger="revealed"
+   hx-swap="afterend"
+   {% endif %}
 >
-    <h2 class="font-semibold text-lg">Example Package</h2>
+    <h2 class="font-semibold text-lg">{{package.name}}</h2>
     <p class="flex-1">
-        Some example Description.
-        We even have multiple lines.
-        This text should not be visible
-        by using the Flow-Font.
+        {{package.short_description}}
     </p>
-</div>
+</a>
 {% endfor %}

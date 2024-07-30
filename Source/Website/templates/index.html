@@ -12,13 +12,8 @@
     <div
             id="package-list"
             class="flex flex-wrap gap-4 justify-stretch w-full"
-            hx-get="/package"
-            hx-ext="json-enc"
-            hx-target="this"
-            hx-trigger="load"
-            hx-swap="innerHTML"
     >
-        Loading...
+        {% include "package/list.html" %}
     </div>
 </main>
 {% endblock %}
