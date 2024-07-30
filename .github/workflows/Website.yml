@@ -35,9 +35,9 @@ jobs:
         run: sudo apt-get install -y musl-dev gcc-aarch64-linux-gnu libssl-dev pkg-config libudev-dev
       - name: Add Toolchain ARM64
         run: |
-          rustup target add aarch64-unknown-linux-gnu
           rustup toolchain install nightly
           rustup default nightly
+          rustup target add aarch64-unknown-linux-gnu
       - name: Build for ARM64
         working-directory: ./Source
         run: |
