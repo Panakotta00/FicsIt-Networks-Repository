@@ -1,6 +1,7 @@
 use std::fmt::{Display, Formatter, Write};
-
-#[derive(Clone)]
+use serde::Serialize;
+use crate::util::{serialize_semver_req, serialize_semver_req_opt, serialize_semver};
+#[derive(Clone, Serialize)]
 pub struct Package {
 	pub id: String,
 	pub name: String,
@@ -11,7 +12,7 @@ pub struct Package {
 	pub versions: Vec<Version>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Serialize)]
 pub enum Readme {
 	ASCIIDOC(String),
 	Markdown(String),
@@ -26,22 +27,26 @@ impl Display for Readme {
 	}
 }
 
-#[derive(Clone)]
+#[derive(Clone, Serialize)]
 pub struct Version {
+	#[serde(serialize_with="serialize_semver")]
 	pub version: semver::Version,
+	#[serde(serialize_with="serialize_semver_req_opt")]
 	pub fin_version: Option<semver::VersionReq>,
+	#[serde(serialize_with="serialize_semver_req_opt")]
 	pub game_version: Option<semver::VersionReq>,
 	pub mod_dependencies: Vec<ModDependency>,
 	pub eeprom: Vec<EEPROM>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Serialize)]
 pub struct ModDependency {
 	pub id: String,
+	#[serde(serialize_with="serialize_semver_req_opt")]
 	pub version: Option<semver::VersionReq>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Serialize)]
 pub struct EEPROM {
 	pub name: String,
 	pub title: String,

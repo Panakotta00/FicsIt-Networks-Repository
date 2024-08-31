@@ -30,3 +30,19 @@ pub async fn get_htmx_header(
 
 	Ok(next.run(req).await)
 }
+
+#[derive(Clone)]
+pub struct AcceptJsonOnly(pub bool);
+
+pub async fn accept_json_only(
+	headers: HeaderMap,
+	mut req: Request,
+	next: Next,
+) -> Result<impl IntoResponse, (StatusCode, String)> {
+	let json = headers.get("Accept")
+		.map(|h| h.to_str().ok() == Some("application/json"));
+	req.extensions_mut().insert(AcceptJsonOnly(json.unwrap_or(false)));
+
+	Ok(next.run(req).await)
+}
+

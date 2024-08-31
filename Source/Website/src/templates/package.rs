@@ -13,7 +13,7 @@ pub struct ListPackageResponse {
 
 #[derive(Template)]
 #[template(path = "package/package.html")]
-pub struct GetPackageResponse<'a, 'b: 'a> {
-	pub package: &'a Package,
-	pub version: Option<&'b Version>,
+pub struct GetPackageResponse {
+	pub package: Package,
+	pub version: Option<Version>,
 }

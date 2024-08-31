@@ -11,6 +11,7 @@ use axum::routing::get;
 use axum::Router;
 use tower_http::compression::CompressionLayer;
 use tower_http::trace::TraceLayer;
+use tower_http::cors::{Any, CorsLayer};
 use tracing::info;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
@@ -35,8 +36,10 @@ pub async fn app() -> Result<Router, anyhow::Error> {
 		.route("/", get(routes::get_index))
 		.route("/package/:id", get(routes::package::get_package))
 		.layer(from_fn(routes::middleware::get_htmx_header))
+		.layer(from_fn(routes::middleware::accept_json_only))
 		.layer(TraceLayer::new_for_http())
 		.layer(CompressionLayer::new())
+		.layer(CorsLayer::new().allow_origin(Any))
 		.with_state(repository))
 }
 

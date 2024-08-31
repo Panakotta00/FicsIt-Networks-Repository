@@ -9,11 +9,7 @@ askama_axum = { version = "0.4" }
 axum = { version = "0.7.4", features = ["macros"] }
 serde = { version = "1.0.197", features = ["derive"] }
 tokio = { version = "1.36.0", features = ["full"] }
-tower-http = { version = "0.5.2", features = [
-    "fs",
-    "trace",
-    "compression-gzip",
-] }
+tower-http = { version = "0.5.2", features = ["fs", "trace", "compression-gzip", "cors"] }
 tracing = "0.1.40"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 anyhow = "1.0.86"

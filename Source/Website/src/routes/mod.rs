@@ -2,18 +2,18 @@ pub mod middleware;
 pub mod package;
 
 use crate::repository::Repository;
-use crate::routes::middleware::HTMXExtension;
+use crate::routes::middleware::{AcceptJsonOnly, HTMXExtension};
 use crate::templates::package::ListPackageResponse;
 use crate::templates::{GetIndexResponse, PackageCard};
 use askama_axum::IntoResponse;
 use axum::extract::{Query, State};
 use axum::http::{HeaderMap, StatusCode};
 use axum::response::Response;
-use axum::{http, Extension};
+use axum::{http, Extension, Json};
 use ficsit_networks_repository::index;
 use ficsit_networks_repository::index::VersionData;
 use futures_util::future::{join_all, try_join_all};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::str::FromStr;
 use tantivy::collector::{BytesFilterCollector, TopDocs};
@@ -115,10 +115,10 @@ fn check_versions(query: &QueryVersions, version_data: &VersionData) -> Option<(
 
 pub async fn get_index(
 	Extension(htmx): Extension<HTMXExtension>,
+	Extension(AcceptJsonOnly(json_only)): Extension<AcceptJsonOnly>,
 	State(repository): State<Repository>,
 	Query(query): Query<SearchQuery>,
 	Query(pagination): Query<Pagination>,
-	headers: HeaderMap,
 ) -> axum::response::Result<Response> {
 	let searcher = repository.reader.searcher();
 	let schema = repository.package_schema.clone();
@@ -190,7 +190,7 @@ pub async fn get_index(
 
 	let top_docs = searcher.search(&query, &collector).ok().unwrap_or_default();
 
-	let packages = join_all(
+	let packages: Vec<PackageCard> = join_all(
 		top_docs
 			.into_iter()
 			.map(|(_score, doc_address)| {
@@ -236,19 +236,21 @@ pub async fn get_index(
 	})
 	.collect();
 
-	let next_page = pagination.page.unwrap_or(0) + 1;
-
-	if htmx.is_some() {
-		Ok(ListPackageResponse {
-			packages,
-			next_page,
-		}
-		.into_response())
+	if json_only {
+		Ok(Json(packages).into_response())
 	} else {
-		Ok(GetIndexResponse {
-			packages,
-			next_page,
+		let next_page = pagination.page.unwrap_or(0) + 1;
+
+		if htmx.is_some() {
+			Ok(ListPackageResponse {
+				packages,
+				next_page,
+			}.into_response())
+		} else {
+			Ok(GetIndexResponse {
+				packages,
+				next_page,
+			}.into_response())
 		}
-		.into_response())
 	}
 }

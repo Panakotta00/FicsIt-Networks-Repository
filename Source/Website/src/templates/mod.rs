@@ -1,14 +1,16 @@
 pub mod package;
 
 use askama::Template;
-use ficsit_networks_repository::metadata;
+use ficsit_networks_repository::util;
 use itertools::Itertools;
+use serde::Serialize;
 
-#[derive(Clone)]
+#[derive(Clone, Serialize)]
 pub struct PackageCard {
 	pub id: String,
 	pub name: String,
 	pub short_description: String,
+	#[serde(serialize_with="util::serialize_semver_opt")]
 	pub version: Option<semver::Version>,
 }
 

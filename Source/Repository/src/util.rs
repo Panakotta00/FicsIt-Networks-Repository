@@ -22,6 +22,27 @@ pub fn serialize_semver_req_opt<S: Serializer>(
 	}
 }
 
+#[derive(Serialize)]
+struct SerializeSemver<'a>(
+	#[serde(serialize_with = "serialize_semver")] &'a semver::Version,
+);
+
+pub fn serialize_semver<S: Serializer>(
+	v: &semver::Version,
+	s: S,
+) -> Result<S::Ok, S::Error> {
+	s.serialize_str(&v.to_string())
+}
+pub fn serialize_semver_opt<S: Serializer>(
+	v: &Option<semver::Version>,
+	s: S,
+) -> Result<S::Ok, S::Error> {
+	match v {
+		Some(v) => s.serialize_some(&crate::util::SerializeSemver(v)),
+		None => s.serialize_none(),
+	}
+}
+
 #[derive(Deserialize)]
 struct DeserializeSemverReq(
 	#[serde(deserialize_with = "deserialize_semver_req")] semver::VersionReq,

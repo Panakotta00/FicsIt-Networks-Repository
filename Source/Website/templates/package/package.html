@@ -13,7 +13,7 @@
         <div id="title">
             <div class="flex items-baseline gap-4">
                 <h1>{{package.name}}</h1>
-                {% if let Some(version) = version %}<p>v{{version.version.to_string()}}</p>{% endif %}
+                {% if let Some(version) = version.as_ref() %}<p>v{{version.version.to_string()}}</p>{% endif %}
             </div>
             <div class="flex items-center gap-4">
                 {% for tag in package.tags %}
@@ -24,7 +24,7 @@
         <div id="description" class="flex-1 p-4" hidden>
 {{package.readme}}
         </div>
-        {% if let Some(v) = version %}
+        {% if let Some(v) = version.as_ref() %}
         {% if v.eeprom.len() > 0 %}
         <div id="eeproms" class="w-full mt-4">
             <h2>EEPROMs</h2>
@@ -32,7 +32,7 @@
                 {% for eeprom in v.eeprom %}
                 <div id="eeprom-{{eeprom.name}}" class="bg-secondary-bg text-secondary-fg p-2 px-4 w-64 grow">
                     <div class="flex items-center justify-between">
-                        <a class="tooltip" href="https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Packages/{{package.id}}/{{eeprom.name}}" target=”_blank”>
+                        <a class="tooltip" href="https://github.com/Panakotta00/FicsIt-Networks-Repository/tree/main/Packages/{{package.id}}/v{{v.version}}/{{eeprom.name}}" target=”_blank”>
                             <b>{{eeprom.title}}</b>
                             <span class="tooltiptext">
                                 {{eeprom.name}}
@@ -40,7 +40,7 @@
                         </a>
                         <button class="popup border-solid border-secondary-fg border rounded p-1 mx-2"
                                 _="on click
-                                   fetch 'https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/{{package.id}}/{{eeprom.name}}'
+                                   fetch 'https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/{{package.id}}/v{{v.version}}/{{eeprom.name}}'
                                    put the result into text
                                    js(text)
                                        navigator.clipboard.writeText(text)
@@ -80,7 +80,7 @@
             <div class="pl-4 flex flex-col">
                 {% for v in package.versions %}
                 <a href="?version={{urlencoding::encode(v.version.to_string().as_str())}}">
-                {% if version.is_some() && version.unwrap().version == v.version %}
+                {% if version.is_some() && version.as_ref().unwrap().version == v.version %}
                 <b>{{v.version}}</b>
                 {% else %}
                 {{v.version}}
