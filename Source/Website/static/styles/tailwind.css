@@ -65,6 +65,10 @@
         .admonitionblock {
             padding-top: 2em;
 
+            table {
+                position: relative;
+            }
+
             tr {
                 position: relative;
 
