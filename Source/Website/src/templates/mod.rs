@@ -24,3 +24,7 @@ pub struct GetIndexResponse {
 	pub packages: Vec<PackageCard>,
 	pub next_page: usize,
 }
+
+#[derive(Template)]
+#[template(path = "privacy-policy.html")]
+pub struct GetPrivacyPolicyResponse {}

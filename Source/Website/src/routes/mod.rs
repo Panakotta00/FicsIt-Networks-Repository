@@ -4,7 +4,7 @@ pub mod package;
 use crate::repository::Repository;
 use crate::routes::middleware::{AcceptJsonOnly, HTMXExtension};
 use crate::templates::package::ListPackageResponse;
-use crate::templates::{GetIndexResponse, PackageCard};
+use crate::templates::{GetIndexResponse, GetPrivacyPolicyResponse, PackageCard};
 use askama_axum::IntoResponse;
 use axum::extract::{Query, State};
 use axum::http::{HeaderMap, StatusCode};
@@ -253,4 +253,8 @@ pub async fn get_index(
 			}.into_response())
 		}
 	}
+}
+
+pub async fn privacy_policy() -> axum::response::Result<Response> {
+	Ok(GetPrivacyPolicyResponse {}.into_response())
 }

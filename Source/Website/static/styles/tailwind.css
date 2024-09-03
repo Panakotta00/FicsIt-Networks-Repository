@@ -1,10 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Flow+Rounded&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+    @font-face {
+        font-family: 'Flow Rounded';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(/fonts/FlowRounded-Regular.ttf) format('ttf');
+        unicode-range: WeU+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
     :root {
         --color-primary-fg: #222222;
         --color-secondary-fg: #111111;

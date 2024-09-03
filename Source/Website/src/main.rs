@@ -34,6 +34,7 @@ pub async fn app() -> Result<Router, anyhow::Error> {
 			tower_http::services::ServeDir::new("static/styles"),
 		)
 		.route("/", get(routes::get_index))
+		.route("/privacy-policy", get(routes::privacy_policy))
 		.route("/package/:id", get(routes::package::get_package))
 		.layer(from_fn(routes::middleware::get_htmx_header))
 		.layer(from_fn(routes::middleware::accept_json_only))
