@@ -1,0 +1,6 @@
+fin_version = ">= 0.3.20"
+
+[[EEPROM]]
+name = "EEPROM.lua"
+title = "EEPROM"
+description = "The example program you have to put into your EEPROM."

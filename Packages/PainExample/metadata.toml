@@ -1,0 +1,4 @@
+name = "Paint Examples"
+short_description = "Simple Paint Program Example using GPU T1"
+tags = ["example"]
+authors = ["Panakotta00"]

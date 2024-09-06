@@ -1,0 +1,8 @@
+= Paint Example
+
+This is a simple example showing how you can use the GPU T1.
+
+It gets any GPU and any Screen (built-in or via network),
+then it clears the screen and adds at the bottom a row of colors you can choose from.
+
+You can then use your cursor to click on such color and start painting on the screen!
