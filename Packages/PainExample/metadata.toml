@@ -1,4 +1,4 @@
-name = "Paint Examples"
+name = "Paint Example"
 short_description = "Simple Paint Program Example using GPU T1"
 tags = ["example"]
 authors = ["Panakotta00"]
