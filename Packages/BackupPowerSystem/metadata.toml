@@ -1,0 +1,5 @@
+name = "Backup Power"
+version = "0.0.1"
+short_description = "Manages backup power - sort of like a UPS but too slow to guarantee uninterrupted power"
+tags = ["backup", "power", "UPS"]
+authors = ["Rostriano"]
