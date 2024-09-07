@@ -34,7 +34,7 @@
 local POLL_INTERVAL <const> = 5
 local CATEGORY <const> = "BPS"
 
-local MODE <const> = { NORMAL="1", DISCHARGING="2", CHARGING="3", OFF="4", TRIPPED_FUSE="5" }
+local MODE <const> = { NORMAL="1", DISCHARGING="2", CHARGING="3" }
 
 
 ---Find and return a table of all the NetworkComponent proxies that are of the given class[es]
