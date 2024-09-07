@@ -3,7 +3,8 @@
 --- Date: 2024-07-04
 ---
 
---- The Ficsit Backup Power System manages backup power - sort of like a UPS but too slow to guarantee uninterrupted power.
+--- The Ficsit Backup Power Supply manages backup power - sort of like a UPS but too slow to
+--- guarantee uninterrupted power. Or is it?
 ---
 --- To use the system, you will need one or more batteries, plus two regular switches and of course a computer.
 --  The switches must be hooked up as drawn below:
