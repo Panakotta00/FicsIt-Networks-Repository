@@ -6,25 +6,30 @@
 --- The Ficsit Backup Power Supply manages backup power - sort of like a UPS but too slow to
 --- guarantee uninterrupted power. Or is it?
 ---
---- To use the system, you will need one or more batteries, plus two regular switches and of course a computer.
+--- To use the Ficsit BPS, you will need one or more power storages, plus two power switches and of course a computer.
 --  The switches must be hooked up as drawn below:
 ---
----  mains power    load     battery
----       |           |         |
----       |           |         |
----       +-----/ ----+----/ ---+
+---  mains power    load    power storage
+---       |           |           |
+---       |           |           |
+---       +-----/ ----+----/ -----+
 ---
----           mains      battery
----          switch      switch
+---           mains     power storage
+---          switch        switch
 ---
 --- The mains switch must have the following nick: "BPS mainsSwitch"
---- The battery switch must have the following nick: "BPS batterySwitch"
+--- The power storage switch must have the following nick: "BPS powerStorageSwitch"
 ---
---- The computer needs to have a network connection to both switches and a battery.
+--- The computer needs to have a network connection to both switches and a power storage.
 ---
---- To guarantee grid stability, Ficsit advises to have a minimum of one battery connected
+--- To guarantee grid stability, Ficsit advises to have a minimum of one power storage connected
 --- directly to the grid. This ensures there will be enough power available for the limited
---- amount of time it takes for your Backup Power management system to flip its switches.
+--- amount of time it takes for your Backup Power Supply management system to flip its switches.
+---
+--- Please note that while the charge rate of a power storage is limited to 100 MW, its
+--- discharge rate is unlimited. This means that for the maximum of five seconds it takes
+--- for the BPS to provide backup power, a single power storage can supply as much
+--- as 72,000 MW of power.
 
 local POLL_INTERVAL <const> = 5
 local CATEGORY <const> = "BPS"
@@ -81,10 +86,10 @@ function getComponentsByClass( class, getOne )
 end
 
 
-local battery = getComponentsByClass( { "PowerStorage" }, true )
-    or computer.panic( "Battery not found" )
-local batterySwitch = component.proxy( component.findComponent(CATEGORY .. " batterySwitch" )[1] )
-    or computer.panic( "Battery switch not found" )
+local powerStorage = getComponentsByClass( { "PowerStorage" }, true )
+    or computer.panic( "Power storage not found" )
+local powerStorageSwitch = component.proxy( component.findComponent(CATEGORY .. " powerStorageSwitch" )[1] )
+    or computer.panic( "Power storage switch not found" )
 local mainsSwitch = component.proxy( component.findComponent(CATEGORY .. " mainsSwitch" )[1] )
     or computer.panic( "Mains switch not found" )
 local connectors = mainsSwitch:getPowerConnectors()
@@ -112,7 +117,7 @@ function getGridSurplus( gridCircuit )
 end
 
 -- Set switches to default settings and then enter loop to figure out where we stand
-batterySwitch:setIsSwitchOn( false )
+powerStorageSwitch:setIsSwitchOn( false )
 mainsSwitch:setIsSwitchOn( true )
 
 while( true ) do
@@ -129,37 +134,37 @@ while( true ) do
 
   -- Determine what to do
   if  gridCircuit ~= nil and gridCircuit.production > 0 then
-    if battery.powerStore == 100 and not hasTrippedFuse( { circuit1, circuit2 } ) then
+    if powerStorage.powerStore == 100 and not hasTrippedFuse( { circuit1, circuit2 } ) then
 
-      -- We got mains power and the battery doesn't need to charge, all is well
+      -- We got mains power and the power storage doesn't need to charge, all is well
       if currMode ~= MODE.NORMAL then
         print( "Switching to normal mode" )
-        batterySwitch:setIsSwitchOn( false )
+        powerStorageSwitch:setIsSwitchOn( false )
         mainsSwitch:setIsSwitchOn( true )
         currMode = MODE.NORMAL
       end
     elseif
       not hasTrippedFuse( { circuit1, circuit2 } )
-      and getGridSurplus( gridCircuit ) > 0 -- Make sure we won't accidentally discharge the battery
+      and getGridSurplus( gridCircuit ) > 0 -- Make sure we won't accidentally discharge the power storage
     then
-      -- We got mains power; charge battery
+      -- We got mains power; charge power storage
       if currMode ~= MODE.CHARGING then
-        print( "Charging battery" )
+        print( "Charging power storage" )
         mainsSwitch:setIsSwitchOn( true )
-        batterySwitch:setIsSwitchOn( true )
+        powerStorageSwitch:setIsSwitchOn( true )
         currMode = MODE.CHARGING
       end
-      print( "Battery charge", battery.powerStore, "MWh" )
+      print( "Power storage charge", powerStorage.powerStore, "MWh" )
     end
   else -- gridCircuit.production == 0
-    -- Mains power down; run on battery
+    -- Mains power down; run on power storage
     if currMode ~= MODE.DISCHARGING then
-      print( "Running on battery" )
+      print( "Running on power storage" )
       currMode = MODE.DISCHARGING
     end
     mainsSwitch:setIsSwitchOn( false )
-    batterySwitch:setIsSwitchOn( true )
-    print( "Battery charge", battery.powerStore, "MWh" )
+    powerStorageSwitch:setIsSwitchOn( true )
+    print( "Power storage charge", powerStorage.powerStore, "MWh" )
   end
 
   ::continue::
