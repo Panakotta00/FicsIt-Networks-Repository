@@ -1,0 +1,5 @@
+name = "Clock"
+version = "0.0.1"
+short_description = "Displays Massage-2(A-B)b Coordinated Time or UTC on one or multiple screens"
+tags = ["clock", "time", "UTC", "M2CT"]
+authors = ["Rostriano"]
