@@ -1,0 +1,6 @@
+fin_version = ">= 0.3.19"
+
+[[EEPROM]]
+name = "EEPROM.lua"
+title = "EEPROM"
+description = "The contents of EEPROM.lua will have to be copied to your EEPROM."
