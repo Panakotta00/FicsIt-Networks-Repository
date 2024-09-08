@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<main class="dark:bg-neutral-800 flex h-full" id="package-{{package.id}}">
+<main class="dark:bg-neutral-800 flex items-stretch flex-auto" id="package-{{package.id}}">
     <div id="content" class="grow w-full p-6">
         <div id="title">
             <div class="flex items-baseline gap-4">
@@ -63,7 +63,7 @@
         {% endif %}
         {% endif %}
     </div>
-    <div id="sidebar" class="bg-secondary-bg text-secondary-fg p-4 h-full">
+    <div id="sidebar" class="bg-secondary-bg text-secondary-fg p-4">
         {% if !package.authors.is_empty() %}
         <div id="authors">
             <h3>Authors</h3>
