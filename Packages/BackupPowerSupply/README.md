@@ -15,11 +15,10 @@ The switches must be hooked up as shown below:
              switch        switch
 
 
-Below is a photograph of what that might look like in reality:
+A demonstration setup is shown below:
 
 ![Example setup of the Ficsit Backup Power Supply](preview1.jpg "Example setup of the Ficsit BPS")
-~Example setup of the Ficsit Backup Power Supply~
-
+<sub>Example setup of the Ficsit Backup Power Supply</sub>
 
 The mains switch must have the following nick: "BPS mainsSwitch"
 The power storage switch must have the following nick: "BPS powerStorageSwitch"
@@ -32,10 +31,13 @@ Once operational, the Ficsit Backup Power Supply will not need any attention fro
 The Ficsit BPS will monitor the grid and the connected power storage(s). When the overall load on the grid exceeds the production, it will disconnect itself from the grid and engage the power storage(s) so you can continue operating from the power storage(s) as long as there is any charge left in the power storage(s). Then, when the grid is balanced again, it will start charging the power storage(s).
 
 ![Normal operation](preview2.jpg "The Ficsit BPS during Normal operation")
+<sub>The Ficsit BPS during Normal operation</sub>
 
 ![Charging](preview3.jpg "The Ficsit BPS while Charging")
+<sub>The Ficsit BPS while Charging</sub>
 
 ![Providing backup power](preview4.jpg "The ficsit BPS providing backup power")
+<sub>The ficsit BPS providing backup power</sub>
 
 ## Considerations for designing your grid
 To guarantee grid stability, Ficsit advises to have a minimum of one power storage connected
