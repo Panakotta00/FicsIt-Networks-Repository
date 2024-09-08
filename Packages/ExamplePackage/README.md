@@ -1,5 +1,5 @@
 # Example Package
-This is an example package showcasing different options available to packages.  
-This Package in particular is an single EEPROM Package.
+This is an example package showcasing different options available to packages.
+This package in particular is a single EEPROM package.
 
-The package is also useful as a tempalte for new packages.
+The package is also useful as a template for new packages.
