@@ -7,7 +7,7 @@ Hook a computer up to both a screen and a power connector. The computer must hav
 You may specify which screen to use by adding the screen's nick to
 the computer's nick. For example, say your screen has "powerMonitor" as its
 nick, then you should add the following to your computer's nick:
-    screen="powerMonitor"
+    `screen="powerMonitor"`
 
 Caveat: this software was written for a screen 10 m wide and 6 m tall and may not work properly with screens of different dimensions.
 
