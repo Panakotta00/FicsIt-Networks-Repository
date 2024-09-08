@@ -1,0 +1,4 @@
+name = "Backup Power Supply"
+short_description = "Manages backup power - sort of like a UPS but too slow to guarantee uninterrupted power"
+tags = ["backup", "power", "UPS"]
+authors = ["Rostriano"]

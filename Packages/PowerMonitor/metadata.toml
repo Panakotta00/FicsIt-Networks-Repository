@@ -1,0 +1,4 @@
+name = "Power Monitor"
+short_description = "Displays a power graph and power storage charge / discharge information"
+tags = ["power", "graph", "monitor"]
+authors = ["Rostriano"]

@@ -1,7 +1,7 @@
 # If you only have one EEPROM File, then this config is not needed,
-# but if you want to provide multiple "variations" (like a sever and client)
-# you can use this to define and describe multiple eeprom files in one package.
+# but if you want to provide multiple "variations" (like a server and client),
+# you can use this to define and describe multiple EEPROM files in one package.
 [[EEPROM]]
 name = "EEPROM.lua"
 title = "EEPROM"
-description = "The main EEPROM used when installing this package. The Name is not relevant."
+description = "The main EEPROM used when installing this package. The name is not relevant."

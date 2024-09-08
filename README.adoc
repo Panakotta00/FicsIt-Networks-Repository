@@ -1,14 +1,14 @@
 = FicsIt-Networks-Repository
 
-This is a repository/collection of Software Packages for use with the link:https://github.com/Panakotta00/FicsIt-Networks[FicsIt-Networks] Satisfactory mod.
+This is a repository/collection of software packages for use with the link:https://github.com/Panakotta00/FicsIt-Networks[FicsIt-Networks] Satisfactory mod.
 
-It contains Templates, Full-Fledged Programs and Examples provided by the Mod-Authors and the Mods Community.
+It contains templates, full-fledged programs and examples provided by the mod's authors and the mod's community.
 
 == Publish a Package
 
-Anyone with a GitHub Account can publish a Package.
+Anyone with a GitHub account can publish a package.
 
-Create Fork of this Git Repository and add a Folder with an Alphanumeric Name (`[a-zA-Z0-9_\-]+`) to the link:/Repository[`Repository`] Folder.
+Create fork of this git repository and add a folder with an alphanumeric name (`[a-zA-Z0-9_\-]+`) to the link:/Repository[`Repository`] folder.
 
 In this newly created folder create a `README.adoc` or `README.md` containing a description of your package. +
 Add a `EEPROM.lua` file containing your EEPROM Code. +
@@ -18,20 +18,20 @@ TIP: You can look at already submitted packages for examples of package structur
 
 NOTE: Alternatively you can copy the link:/Repository/ExamplePackage[Example Package], change the folder and fill in the files with your own data.
 
-After you have comitted your changes to your Fork, you can create a Pull-Request to this Repository on the main branch. +
-Once your PR gets merged, your Package will be available in the FicsIt-Repository.
+After you have comitted your changes to your fork, you can create a pull-request to this repository on the main branch. +
+Once your PR gets merged, your package will be available in the FicsIt-Repository.
 
-If you want to update your software, create a copy of your Package-Folder contents, and put them into a newly created folder inside your Package-Folder with the version "old" version-number prefixed with `v` as folder name. +
-e.g. if you had a package `MyPackage` with the version `1.2.3`, create a Folder called `v1.2.3` and copy your contents in there. +
+If you want to update your software, create a copy of your package folder contents, and put them into a newly created folder inside your package folder with the version "old" version-number prefixed with `v` as folder name. +
+e.g. if you had a package `MyPackage` with the version `1.2.3`, create a folder called `v1.2.3` and copy your contents in there. +
 After that you can alter your package however you want.
 
-CAUTION: Ensure you have increased your version number in the metadata file. 
+CAUTION: Ensure you have increased your version number in the metadata file.
 
 == Work-In-Progress
 
-This Repository is work-in-progress. +
-And Package defintion may change over time.
+This repository is work-in-progress. +
+And package definition may change over time.
 
 Already submitted packages will get converted to new defintions using manual or automatic migration procedures if possible.
 
-There will be a Web and In-Game Interface to browser the Repository more user-friendly.
+There will be web and in-game interfaces to browse the repository in more user-friendly way.

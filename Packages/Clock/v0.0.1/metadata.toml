@@ -1,0 +1,6 @@
+fin_version = ">= 0.3.19"
+
+[[EEPROM]]
+name = "EEPROM.lua"
+title = "EEPROM"
+description = "The main EEPROM used when installing this package. The name is not relevant."
