@@ -17,7 +17,7 @@ The switches must be hooked up as shown below:
 
 A demonstration setup is shown below:
 
-![Example setup of the Ficsit Backup Power Supply](preview1.jpg "Example setup of the Ficsit BPS")
+![Example setup of the Ficsit Backup Power Supply](https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/BackupPowerSupply/preview1.jpg "Example setup of the Ficsit BPS")
 <sub>Example setup of the Ficsit Backup Power Supply</sub>
 
 Please observe the following:
@@ -30,13 +30,13 @@ Once operational, the Ficsit Backup Power Supply will not need any attention fro
 
 The Ficsit BPS will monitor the grid and the connected power storage(s). When the overall load on the grid exceeds the production, it will disconnect itself from the grid and engage the power storage(s) so you can continue operating from the power storage(s) as long as there is any charge left in the power storage(s). Then, when the grid is balanced again, it will start charging the power storage(s).
 
-![Normal operation](preview2.jpg "The Ficsit BPS during Normal operation")
+![Normal operation](https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/BackupPowerSupply/preview2.jpg "The Ficsit BPS during Normal operation")
 <sub>The Ficsit BPS during Normal operation</sub>
 
-![Charging](preview3.jpg "The Ficsit BPS while Charging")
+![Charging](https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/BackupPowerSupply/preview3.jpg "The Ficsit BPS while Charging")
 <sub>The Ficsit BPS while Charging</sub>
 
-![Providing backup power](preview4.jpg "The ficsit BPS providing backup power")
+![Providing backup power](https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/BackupPowerSupply/preview4.jpg "The ficsit BPS providing backup power")
 <sub>The ficsit BPS providing backup power</sub>
 
 ## Considerations for designing your grid

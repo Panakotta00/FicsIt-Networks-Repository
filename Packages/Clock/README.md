@@ -1,7 +1,7 @@
 # The Ficsit multi-screen and multi-timezone clock
 The Ficsit multi-screen and multi-timezone clock displays the time on one or multiple screens.
 
-![Example setup of the Ficsit Clock](preview1.jpg "Example setup of the Ficsit Clock")
+![Example setup of the Ficsit Clock](https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/Clock/preview1.jpg "Example setup of the Ficsit Clock")
 <sub>Example setup of the Ficsit multi-screen and multi-timezone clock</sub>
 
 ## Setup and installation
