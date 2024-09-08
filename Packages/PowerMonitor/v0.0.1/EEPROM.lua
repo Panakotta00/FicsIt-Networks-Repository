@@ -1,18 +1,7 @@
----
 --- PowerMonitor
+---
 --- Created by Rostriano
 --- Date: 2024-08-08
----
-
---- Displays a power graph and power storage charge / discharge information.
----
---- Usage: hook a computer up to both a screen and a power connector.
---- The computer must have a GPU T2.
----
---- You may specify which screen to use by adding the screen's nick to
---- the computer's nick. For example, say your screen has "powerMonitor" as its
---- nick, then you should add the following to your computer's nick:
----     screen="powerMonitor"
 ---
 
 --------------------------------------------------------------------------------
