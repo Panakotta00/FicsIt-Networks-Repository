@@ -6,10 +6,11 @@ The Ficsit multi-screen and multi-timezone clock displays the time on one or mul
 
 ## Setup and installation
 Please consider the following when installing your clocks:
-- One GPU T1 per screen is required.
-- Each screen needs to have its nick configured as follows:
+- one GPU T1 per screen is required
+- your screens should optimally have the smallest height possible and one click wider than the minimum possible width
+- each screen needs to have its nick configured as follows:
     - clock
-    - tz="<desired time zone>"
+    - tz="\<desired time zone\>"
 
 A complete nick would look like this:
     `clock tz="UTC"`
