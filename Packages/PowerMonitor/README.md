@@ -26,5 +26,5 @@ Examples of the Ficsit Power Monitor in operation are shown below.
 ![The Ficsit Power Monitor while discharging](https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/PowerMonitor/preview3.jpg "The Ficsit Power Monitor while discharging")
 <sub>An example of the Ficsit Power Monitor while discharging</sub>
 
-![The Ficsit Power Monitor when power storage is nearly full](preview4.jpg "The Ficsit Power Monitor when power storage is nearly full")
+![The Ficsit Power Monitor when power storage is nearly full](https://raw.githubusercontent.com/Panakotta00/FicsIt-Networks-Repository/main/Packages/PowerMonitor/preview4.jpg "The Ficsit Power Monitor when power storage is nearly full")
 <sub>An example of the Ficsit Power Monitor when power storage is nearly full</sub>
