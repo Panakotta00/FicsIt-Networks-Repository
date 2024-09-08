@@ -6,19 +6,15 @@ guarantee uninterrupted power. Or is it?
 To use the Ficsit BPS, you will need one or more power storages, plus two power switches and of course a computer.
 The switches must be hooked up as drawn below:
 
- mains power    load    power storage
+`mains power    load    power storage
       |           |           |
       |           |           |
       +-----/ ----+----/ -----+
 
           mains     power storage
-         switch        switch
+         switch        switch`
 
-<figure>
-    <img src="preview1.jpg"
-         alt="Example setup of the Ficsit Backup Power Supply">
-    <figcaption>Example setup of the Ficsit BPS</figcaption>
-</figure>
+![Example setup of the Ficsit Backup Power Supply](preview1.jpg "Example setup of the Ficsit BPS")
 
 The mains switch must have the following nick: "BPS mainsSwitch"
 The power storage switch must have the following nick: "BPS powerStorageSwitch"
