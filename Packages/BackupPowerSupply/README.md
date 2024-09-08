@@ -14,8 +14,11 @@ The switches must be hooked up as shown below:
               mains     power storage
              switch        switch
 
+
+Below is a photograph of what that might look like in reality:
+
 ![Example setup of the Ficsit Backup Power Supply](preview1.jpg "Example setup of the Ficsit BPS")
-Example setup of the Ficsit Backup Power Supply
+~Example setup of the Ficsit Backup Power Supply~
 
 
 The mains switch must have the following nick: "BPS mainsSwitch"
