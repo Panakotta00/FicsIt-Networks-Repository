@@ -20,10 +20,10 @@ A demonstration setup is shown below:
 ![Example setup of the Ficsit Backup Power Supply](preview1.jpg "Example setup of the Ficsit BPS")
 <sub>Example setup of the Ficsit Backup Power Supply</sub>
 
-The mains switch must have the following nick: "BPS mainsSwitch"
-The power storage switch must have the following nick: "BPS powerStorageSwitch"
-
-The computer needs to have a network connection to both switches and a power storage.
+Please observe the following:
+- the mains switch must have the following nick: "BPS mainsSwitch"
+- the power storage switch must have the following nick: "BPS powerStorageSwitch"
+- the computer needs to have a network connection to both switches and a power storage.
 
 ## Operation and functioning
 Once operational, the Ficsit Backup Power Supply will not need any attention from the employee.
