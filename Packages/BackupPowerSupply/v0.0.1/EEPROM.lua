@@ -1,5 +1,7 @@
 ---
---- Created by Rostriano
+--- Ficsit Backup Power Supply
+---
+--- Created by Rostriano, with code by 1000101
 --- Date: 2024-07-04
 ---
 

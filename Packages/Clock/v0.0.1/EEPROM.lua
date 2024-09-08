@@ -1,26 +1,11 @@
 ---
+--- Ficsit multi-screen and multi-timezone clock
+---
 --- Created by Rostriano
 --- Date: 2024-09-07
 ---
 --- Based on work by 1000101 and Aider
 ---
-
---- Displays the time on one or multiple screens. One GPU per screen is required.
----
---- The screens need to have their nick configured as follows:
----     - clock
----     - tz="<desired time zone>"
----
---- A complete nick would look like this:
----     clock tz="UTC"
----
---- Currently, two timezones are available; the aforementioned UTC, plus M2CT. This stands for Massage-2(A-B)b Coordinated Time.
---- When the tz has not been set, it will default to M2CT.
----
---- If you would like to give your screens a nick other than "clock", you can do so via the computer's nick:
----     screen="mystring"
----
-
 
 -- These dimensions are optimal for a screen that has the smallest height possible and is one click wider than the minimum possible width
 SCREEN_SIZE = { x = 7, y = 1 }
