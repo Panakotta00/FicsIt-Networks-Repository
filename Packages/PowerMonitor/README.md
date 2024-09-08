@@ -12,7 +12,7 @@ nick, then you should add the following to your computer's nick:
 Caveat: this software was written for a screen 10 m wide and 6 m tall and may not work properly with screens of different dimensions.
 
 ## Operation
-The Ficsit Power Monitor will show a graph of power production and consumption, as well as maximum consumption and production capacity. Additionally, it will also display power storage status when applicable.
+The Ficsit Power Monitor will show a graph of power production and consumption, as well as maximum consumption and production capacity. Additionally, it will display power storage status when applicable.
 
 ## Examples
 Examples of the Ficsit Power Monitor in operation are shown below.
