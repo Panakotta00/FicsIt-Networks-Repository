@@ -36,6 +36,7 @@ jobs:
       - name: Add Nightly Toolchain
         run: |
           rustup toolchain install nightly
+          rustup default nightly
       - name: Build
         working-directory: ./Source
         run: |
