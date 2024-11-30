@@ -80,7 +80,9 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           source: "./Source/Website/*"
-          target: ${{ secrets.DEPLOY_FOLDER }}
+          target: "FIN-Repo/Website"
+      - name: Copy to LXC
+        run: pct push FIN-Repo/Website /root/FicsIt-Networks-Repository/Website
       - name: Docker Compose
         uses: appleboy/ssh-action@v1.0.3
         with:
