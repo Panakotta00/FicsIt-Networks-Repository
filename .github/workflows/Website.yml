@@ -32,17 +32,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Dependencies
-        run: sudo apt-get install -y musl-dev gcc-aarch64-linux-gnu libssl-dev pkg-config libudev-dev
-      - name: Add Toolchain ARM64
+        run: sudo apt-get install -y musl-dev libssl-dev pkg-config libudev-dev
+      - name: Add Nightly Toolchain
         run: |
           rustup toolchain install nightly
-          rustup default nightly
-          rustup target add aarch64-unknown-linux-gnu
-      - name: Build for ARM64
+      - name: Build
         working-directory: ./Source
         run: |
-          export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc
-          cargo build --package ficsit-networks-repository-website --verbose --target aarch64-unknown-linux-gnu --release
+          cargo build --package ficsit-networks-repository-website --verbose --release
       - uses: pnpm/action-setup@v4
         with:
           version: 9
@@ -55,7 +52,7 @@ jobs:
       - name: Prepare Upload
         working-directory: ./Source
         run: |
-          cp target/aarch64-unknown-linux-gnu/release/ficsit-networks-repository-website ./Website
+          cp target/release/ficsit-networks-repository-website ./Website
           chmod 770 ./Website/ficsit-networks-repository-website
       - name: Upload Website
         uses: actions/upload-artifact@v4
