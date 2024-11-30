@@ -80,9 +80,15 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           source: "./Source/Website/*"
-          target: "FIN-Repo/Website"
+          target: "FIN-Repo"
       - name: Copy to LXC
-        run: pct push FIN-Repo/Website /root/FicsIt-Networks-Repository/Website
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            pct push FIN-Repo/Source/Website /root/FicsIt-Networks-Repository/Website
       - name: Docker Compose
         uses: appleboy/ssh-action@v1.0.3
         with:
