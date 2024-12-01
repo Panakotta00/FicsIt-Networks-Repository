@@ -98,4 +98,4 @@ jobs:
           script: |
             cd ${{ secrets.DEPLOY_FOLDER }}
             chmod 770 ./Website/ficsit-networks-repository-website
-            podman-compose up -d --build --force-recreate
+            docker compose up -d --build --force-recreate
