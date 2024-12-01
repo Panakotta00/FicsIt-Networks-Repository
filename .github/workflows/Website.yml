@@ -96,6 +96,5 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            cd ${{ secrets.DEPLOY_FOLDER }}
-            chmod 770 ./Website/ficsit-networks-repository-website
-            docker compose up -d --build --force-recreate
+            pct exec 101 chmod 770 ${{ secrets.DEPLOY_FOLDER }}/Website/ficsit-networks-repository-website
+            pct exec 101 docker compose up -d --build --force-recreate
