@@ -88,7 +88,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            pct push FIN-Repo/Source/Website /root/FicsIt-Networks-Repository/Website
+            pct push 101 FIN-Repo/Source/Website /root/FicsIt-Networks-Repository/Website
       - name: Docker Compose
         uses: appleboy/ssh-action@v1.0.3
         with:
