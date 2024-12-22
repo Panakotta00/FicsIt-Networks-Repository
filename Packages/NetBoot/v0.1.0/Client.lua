@@ -1,7 +1,7 @@
 --[[ Net-Boot Client ]]--
 
 -- Configuration
-local netBootProgramName = "counters.lua"
+local netBootProgramName = "counter.lua"
 local netBootPort = 8
 
 -- Setup Network
