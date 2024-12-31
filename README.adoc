@@ -8,7 +8,7 @@ It contains templates, full-fledged programs and examples provided by the mod's 
 
 Anyone with a GitHub account can publish a package.
 
-Create fork of this git repository and add a folder with an alphanumeric name (`[a-zA-Z0-9_\-]+`) to the link:/Repository[`Repository`] folder.
+Create fork of this git repository and add a folder with an alphanumeric name (`[a-zA-Z0-9_\-]+`) to the link:/Packages[`Packages`] folder.
 
 In this newly created folder create a `README.adoc` or `README.md` containing a description of your package. +
 Add a `EEPROM.lua` file containing your EEPROM Code. +
