@@ -1,0 +1,5 @@
+name = "UniversalBootloader"
+version = "1.0"
+short_description = "Bootloader that uses both storage and net-boot"
+tags = ["boot", "network"]
+authors = ["tomkcook"]
