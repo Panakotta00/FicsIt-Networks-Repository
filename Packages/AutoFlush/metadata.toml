@@ -1,0 +1,4 @@
+name = "Auto Flush"
+short_description = "Automatically Flush Pipe Networks"
+tags = ["fluid", "pipe", "flush", "automate"]
+authors = ["DrewBFG"]
